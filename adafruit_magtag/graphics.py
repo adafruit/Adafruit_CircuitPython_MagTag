@@ -51,12 +51,7 @@ class Graphics:
 
     # pylint: disable=too-many-instance-attributes, too-many-locals, too-many-branches, too-many-statements
     def __init__(
-        self,
-        *,
-        default_bg=None,
-        profile=MAGTAG_29_GRAYSCALE,
-        rotation=270,
-        debug=False
+        self, *, default_bg=None, profile=MAGTAG_29_GRAYSCALE, rotation=270, debug=False
     ):
 
         self._debug = debug
@@ -115,7 +110,10 @@ class Graphics:
             color_palette = displayio.Palette(1)
             color_palette[0] = file_or_color
             self._bg_sprite = displayio.TileGrid(
-                color_bitmap, pixel_shader=color_palette, x=position[0], y=position[1],
+                color_bitmap,
+                pixel_shader=color_palette,
+                x=position[0],
+                y=position[1],
             )
         else:
             raise RuntimeError("Unknown type of background")
@@ -125,9 +123,5 @@ class Graphics:
         gc.collect()
 
     def qrcode():
-        """
-
-
-
-        """
+        """"""
         pass

@@ -305,7 +305,7 @@ class Network:
                 raise OSError(change_me)
             self._wifi.neo_status(STATUS_NO_CONNECTION)  # red = not connected
             try:
-                self._wifi.connect(secrets['ssid'], secrets['password'])
+                self._wifi.connect(secrets["ssid"], secrets["password"])
                 self.requests = self._wifi.requests
             except RuntimeError as error:
                 print("Could not connect to internet", error)
@@ -429,7 +429,13 @@ class Network:
         return response
 
     def fetch_data(
-        self, url, *, headers=None, json_path=None, regexp_path=None, timeout=10,
+        self,
+        url,
+        *,
+        headers=None,
+        json_path=None,
+        regexp_path=None,
+        timeout=10,
     ):
         """Fetch data from the specified url and perfom any parsing"""
         json_out = None

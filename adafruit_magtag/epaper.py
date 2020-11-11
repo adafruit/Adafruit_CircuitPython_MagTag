@@ -39,6 +39,7 @@ DISPLAY_TYPE_GRAYSCALE = 3
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MagTag.git"
 
+
 class EPaper:
     """Class representing the EPaper Display. This is used to automatically
     initialize the display.
@@ -67,7 +68,11 @@ class EPaper:
         try:
             displayio.release_displays()
             display_bus = displayio.FourWire(
-                board.SPI(), command=board.EPD_DC, chip_select=board.EPD_CS, reset=board.EPD_RESET, baudrate=1000000
+                board.SPI(),
+                command=board.EPD_DC,
+                chip_select=board.EPD_CS,
+                reset=board.EPD_RESET,
+                baudrate=1000000,
             )
             sleep(1)
             if display_type == DISPLAY_TYPE_GRAYSCALE:

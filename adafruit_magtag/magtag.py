@@ -341,7 +341,6 @@ class MagTag:
         """
         return self.network.get_io_group(group_key)
 
-
     def fetch(self, refresh_url=None, timeout=10):
         """Fetch data from the url we initialized with, perfom any parsing,
         and display text or graphics. This function does pretty much everything

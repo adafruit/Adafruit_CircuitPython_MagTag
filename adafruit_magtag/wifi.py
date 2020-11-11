@@ -85,7 +85,7 @@ class WiFi:
     @property
     def is_connected(self):
         return self._connected
-        
+
     @property
     def ip_address(self):
         return wifi.radio.ipv4_address
