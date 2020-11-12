@@ -125,9 +125,7 @@ class MagTag:
         self._text_wrap = []
         self._text_maxlen = []
         self._text_transform = []
-        self._text_scrolling = []
         self._text_scale = []
-        self._scrolling_index = None
         self._text_font = []
         self._text_line_spacing = []
 
@@ -136,14 +134,13 @@ class MagTag:
     # pylint: disable=too-many-arguments
     def add_text(
         self,
-        text_position=None,
+        text_position=(0, 0),
         text_font=terminalio.FONT,
         text_color=0x808080,
         text_wrap=False,
         text_maxlen=0,
         text_transform=None,
         text_scale=1,
-        scrolling=False,
         line_spacing=1.25,
     ):
         """
@@ -160,10 +157,6 @@ class MagTag:
         :param text_maxlen: The max length of the text for text wrapping. Defaults to 0.
         :param text_transform: A function that will be called on the text before display
         :param int text_scale: The factor to scale the default size of the text by
-        :param bool scrolling: If true, text is placed offscreen and the scroll() function is used
-                               to scroll text on a pixel-by-pixel basis. Multiple text labels with
-                               the scrolling set to True will be cycled through.
-
         """
         if text_font is terminalio.FONT:
             self._text_font.append(text_font)
@@ -178,13 +171,6 @@ class MagTag:
         if not isinstance(text_scale, (int, float)) or text_scale < 1:
             text_scale = 1
         text_scale = round(text_scale)
-        if scrolling:
-            if text_position is None:
-                # Center text if position not specified
-                text_position = (self.display.width, self.display.height // 2 - 1)
-            else:
-                text_position = (self.display.width, text_position[1])
-
         gc.collect()
 
         if self._debug:
@@ -196,11 +182,7 @@ class MagTag:
         self._text_maxlen.append(text_maxlen)
         self._text_transform.append(text_transform)
         self._text_scale.append(text_scale)
-        self._text_scrolling.append(scrolling)
         self._text_line_spacing.append(line_spacing)
-
-        if scrolling and self._scrolling_index is None:  # Not initialized yet
-            self._scrolling_index = self._get_next_scrollable_text_index()
 
     # pylint: enable=too-many-arguments
 
