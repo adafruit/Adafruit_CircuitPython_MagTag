@@ -155,10 +155,17 @@ class Graphics:
         import adafruit_miniqr  # pylint: disable=import-outside-toplevel
 
         # generate the QR code
-        qrcode = adafruit_miniqr.QRCode()
-        qrcode.add_data(qr_data)
-        qrcode.make()
-
+        for type in range(1, 5):
+            try:
+                qrcode = adafruit_miniqr.QRCode(qr_type=type)
+                qrcode.add_data(qr_data)
+                qrcode.make()
+                break
+            except RuntimeError:
+                pass
+                #print("Trying with larger code")
+        else:
+            raise RuntimeError("Could not make QR code")
         # monochrome (2 color) palette
         palette = displayio.Palette(2)
         palette[0] = 0xFFFFFF
