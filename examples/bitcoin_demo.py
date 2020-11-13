@@ -34,15 +34,13 @@ magtag.add_text(
 magtag.preload_font(b"$012345789")  # preload numbers
 magtag.preload_font((0x00A3, 0x20AC))  # preload gbp/euro symbol
 
-timestamp = time.monotonic()
+timestamp = None
 
 while True:
-    if (time.monotonic() - timestamp) > 5:  # once a second...
+    if not timestamp or (time.monotonic() - timestamp) > 60:  # once every 60 seconds...
         try:
             value = magtag.fetch()
             print("Response is", value)
         except (ValueError, RuntimeError) as e:
             print("Some error occured, retrying! -", e)
         timestamp = time.monotonic()
-
-    time.sleep(0.01)
