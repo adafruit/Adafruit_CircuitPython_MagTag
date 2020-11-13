@@ -9,11 +9,14 @@ from adafruit_magtag.magtag import MagTag
 DATA_SOURCE = "https://api.coindesk.com/v1/bpi/currentprice.json"
 DATA_LOCATION = ["bpi", "USD", "rate_float"]
 
+
 def text_transform(val):
     return "Bitcoin: $%d" % val
 
+
 magtag = MagTag(
-    url=DATA_SOURCE, json_path=DATA_LOCATION,
+    url=DATA_SOURCE,
+    json_path=DATA_LOCATION,
 )
 
 magtag.network.connect()
