@@ -26,12 +26,12 @@ Implementation Notes
 """
 
 import gc
-from time import sleep
 import terminalio
 from adafruit_bitmap_font import bitmap_font
 from adafruit_display_text.label import Label
 from adafruit_magtag.network import Network
 from adafruit_magtag.graphics import Graphics
+from adafruit_magtag.peripherals import Peripherals
 
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MagTag.git"
@@ -53,13 +53,6 @@ class MagTag:
                             NeoPixel. Defaults to ``None``, not the status LED
     :param json_transform: A function or a list of functions to call with the parsed JSON.
                            Changes and additions are permitted for the ``dict`` object.
-    :param esp: A passed ESP32 object, Can be used in cases where the ESP32 chip needs to be used
-                             before calling the pyportal class. Defaults to ``None``.
-    :param busio.SPI external_spi: A previously declared spi object. Defaults to ``None``.
-    :param int bit_depth: The number of bits per color channel. Defaults to 2.
-    :param list alt_addr_pins: An alternate set of address pins to use. Defaults to None
-    :param string color_order: A string containing the letter "R", "G", and "B" in the
-                               order you want. Defaults to "RGB"
     :param debug: Turn on debug print outs. Defaults to False.
 
     """
@@ -72,35 +65,21 @@ class MagTag:
         headers=None,
         json_path=None,
         regexp_path=None,
-        default_bg=0x000000,
+        default_bg=None,
         status_neopixel=None,
         json_transform=None,
-        esp=None,
-        external_spi=None,
-        bit_depth=2,
-        alt_addr_pins=None,
-        color_order="RGB",
         debug=False,
-        width=64,
-        height=32,
     ):
 
         self._debug = debug
         self.graphics = Graphics(
             default_bg=default_bg,
-            bit_depth=bit_depth,
-            width=width,
-            height=height,
-            alt_addr_pins=alt_addr_pins,
-            color_order=color_order,
             debug=debug,
         )
         self.display = self.graphics.display
 
         self.network = Network(
             status_neopixel=status_neopixel,
-            esp=esp,
-            external_spi=external_spi,
             extract_values=False,
             debug=debug,
         )
@@ -114,6 +93,8 @@ class MagTag:
         self._regexp_path = regexp_path
 
         self.splash = self.graphics.splash
+
+        self.peripherals = Peripherals()
 
         # Add any JSON translators
         if json_transform:
@@ -136,7 +117,7 @@ class MagTag:
         self,
         text_position=(0, 0),
         text_font=terminalio.FONT,
-        text_color=0x808080,
+        text_color=0x000000,
         text_wrap=False,
         text_maxlen=0,
         text_transform=None,
@@ -241,7 +222,7 @@ class MagTag:
             self._text_color[index] = color
             self._text[index].color = color
 
-    def set_text(self, val, index=0):
+    def set_text(self, val, index=0, auto_refresh=True):
         """Display text, with indexing into our list of text boxes.
 
         :param str val: The text to be displayed
@@ -282,6 +263,8 @@ class MagTag:
                 del self.splash[index_in_splash]
         elif self._text[index] is not None:
             self.splash.append(self._text[index])
+        if auto_refresh:
+            self.refresh()
 
     def get_local_time(self, location=None):
         """Accessor function for get_local_time()"""
@@ -323,10 +306,20 @@ class MagTag:
         """
         return self.network.get_io_group(group_key)
 
+    def refresh(self):
+        """
+        Refresh the display
+        """
+        self.graphics.display.refresh()
+
     def fetch(self, refresh_url=None, timeout=10):
         """Fetch data from the url we initialized with, perfom any parsing,
         and display text or graphics. This function does pretty much everything
         Optionally update the URL
+
+        :param str refresh_url: The overriding URL to fetch from. Defaults to ``None``.
+        :param int timeout: The timeout period in seconds.
+
         """
         if refresh_url:
             self._url = refresh_url
@@ -359,7 +352,8 @@ class MagTag:
                         print("Wrapping text")
                     lines = self.wrap_nicely(string, self._text_wrap[i])
                     string = "\n".join(lines)
-                self.set_text(string, index=i)
+                self.set_text(string, index=i, auto_refresh=False)
+        self.refresh()
         if len(values) == 1:
             return values[0]
         return values

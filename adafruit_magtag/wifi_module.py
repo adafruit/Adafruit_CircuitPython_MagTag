@@ -3,7 +3,7 @@
 #
 # SPDX-License-Identifier: MIT
 """
-`adafruit_magtag.wifi`
+`adafruit_magtag.wifi_module`
 ================================================================================
 
 Helper Library for the Adafruit MagTag.
@@ -16,9 +16,7 @@ Implementation Notes
 
 **Hardware:**
 
-* `Adafruit Metro M4 Express AirLift <https://www.adafruit.com/product/4000>`_
-* `Adafruit RGB Matrix Shield <https://www.adafruit.com/product/2601>`_
-* `64x32 RGB LED Matrix <https://www.adafruit.com/product/2278>`_
+* `Adafruit MagTag <https://www.adafruit.com/product/4800>`_
 
 **Software and Dependencies:**
 
@@ -28,33 +26,25 @@ Implementation Notes
 """
 
 import gc
-import board
-import busio
-from digitalio import DigitalInOut
+import ssl
 import neopixel
-import ipaddress
 import wifi
 import socketpool
 import adafruit_requests
-import ssl
-import espidf
 
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MagTag.git"
 
 
 class WiFi:
-    """Class representing the ESP.
+    """Class representing the WiFi portion of the ESP32-S2.
 
     :param status_neopixel: The pin for the status NeoPixel. Use ``board.NEOPIXEL`` for the on-board
                             NeoPixel. Defaults to ``None``, not the status LED
-    :param esp: A passed ESP32 object, Can be used in cases where the ESP32 chip needs to be used
-                             before calling the pyportal class. Defaults to ``None``.
-    :param busio.SPI external_spi: A previously declared spi object. Defaults to ``None``.
 
     """
 
-    def __init__(self, *, status_neopixel=None, esp=None, external_spi=None):
+    def __init__(self, *, status_neopixel=None):
 
         if status_neopixel:
             self.neopix = neopixel.NeoPixel(status_neopixel, 1, brightness=0.2)
@@ -67,6 +57,13 @@ class WiFi:
         gc.collect()
 
     def connect(self, ssid, password):
+        """
+        Connect to the WiFi Network using the information provided
+
+        :param ssid: The WiFi name
+        :param password: The WiFi password
+
+        """
         print(ssid, password)
         wifi.radio.connect(ssid, password)
         pool = socketpool.SocketPool(wifi.radio)
@@ -84,8 +81,16 @@ class WiFi:
 
     @property
     def is_connected(self):
+        """
+        Return whether we have already connected since reconnections are handled automatically.
+
+        """
         return self._connected
 
     @property
     def ip_address(self):
+        """
+        Return the IP Version 4 Address
+
+        """
         return wifi.radio.ipv4_address

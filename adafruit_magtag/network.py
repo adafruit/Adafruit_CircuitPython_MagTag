@@ -32,7 +32,7 @@ from micropython import const
 from adafruit_io.adafruit_io import IO_HTTP, AdafruitIO_RequestError
 import supervisor
 import rtc
-from adafruit_magtag.wifi import WiFi
+from adafruit_magtag.wifi_module import WiFi
 from adafruit_magtag.fakerequests import Fake_Requests
 
 
@@ -80,13 +80,10 @@ class HttpError(Exception):
 
 
 class Network:
-    """Class representing the Adafruit RGB Matrix Portal.
+    """Class representing the Adafruit MagTag.
 
     :param status_neopixel: The pin for the status NeoPixel. Use ``board.NEOPIXEL`` for the on-board
                             NeoPixel. Defaults to ``None``, not the status LED
-    :param esp: A passed ESP32 object, Can be used in cases where the ESP32 chip needs to be used
-                             before calling the pyportal class. Defaults to ``None``.
-    :param busio.SPI external_spi: A previously declared spi object. Defaults to ``None``.
     :param bool extract_values: If true, single-length fetched values are automatically extracted
                                 from lists and tuples. Defaults to ``True``.
     :param debug: Turn on debug print outs. Defaults to False.
@@ -98,14 +95,10 @@ class Network:
         self,
         *,
         status_neopixel=None,
-        esp=None,
-        external_spi=None,
         extract_values=True,
         debug=False,
     ):
-        self._wifi = WiFi(
-            status_neopixel=status_neopixel, esp=esp, external_spi=external_spi
-        )
+        self._wifi = WiFi(status_neopixel=status_neopixel)
         self._debug = debug
         self.json_transform = []
         self._extract_values = extract_values
@@ -161,7 +154,10 @@ class Network:
 
     def get_local_time(self, location=None):
         # pylint: disable=line-too-long
-        """Fetch and "set" the local time of this microcontroller to the local time at the location, using an internet time API.
+        """
+        NOTE: Do not use yet. This is currently not working.
+
+        Fetch and "set" the local time of this microcontroller to the local time at the location, using an internet time API.
 
         :param str location: Your city and country, e.g. ``"New York, US"``.
 
@@ -328,6 +324,8 @@ class Network:
     def push_to_io(self, feed_key, data):
         """Push data to an adafruit.io feed
 
+        NOTE: Do not use yet. This is currently not working.
+
         :param str feed_key: Name of feed key to push data to.
         :param data: data to send to feed
 
@@ -360,6 +358,8 @@ class Network:
     def get_io_feed(self, feed_key, detailed=False):
         """Return the Adafruit IO Feed that matches the feed key
 
+        NOTE: Do not use yet. This is currently not working.
+
         :param str feed_key: Name of feed key to match.
         :param bool detailed: Whether to return additional detailed information
 
@@ -377,6 +377,8 @@ class Network:
     def get_io_group(self, group_key):
         """Return the Adafruit IO Group that matches the group key
 
+        NOTE: Do not use yet. This is currently not working.
+
         :param str group_key: Name of group key to match.
 
         """
@@ -393,6 +395,8 @@ class Network:
     def get_io_data(self, feed_key):
         """Return all values from Adafruit IO Feed Data that matches the feed key
 
+        NOTE: Do not use yet. This is currently not working.
+
         :param str feed_key: Name of feed key to receive data from.
 
         """
@@ -407,7 +411,13 @@ class Network:
             break
 
     def fetch(self, url, *, headers=None, timeout=10):
-        """Fetch data from the specified url and return a response object"""
+        """Fetch data from the specified url and return a response object
+
+        :param str url: The URL to fetch from.
+        :param list headers: Extra headers to include in the request.
+        :param int timeout: The timeout period in seconds.
+
+        """
         gc.collect()
         if self._debug:
             print("Free mem: ", gc.mem_free())  # pylint: disable=no-member
@@ -429,9 +439,24 @@ class Network:
         return response
 
     def fetch_data(
-        self, url, *, headers=None, json_path=None, regexp_path=None, timeout=10,
+        self,
+        url,
+        *,
+        headers=None,
+        json_path=None,
+        regexp_path=None,
+        timeout=10,
     ):
-        """Fetch data from the specified url and perfom any parsing"""
+        """Fetch data from the specified url and perfom any parsing
+
+        :param str url: The URL to fetch from.
+        :param list headers: Extra headers to include in the request.
+        :param json_path: The path to drill down into the JSON data.
+        :param regexp_path: The path formatted as a regular expression to drill down
+                            into the JSON data.
+        :param int timeout: The timeout period in seconds.
+
+        """
         json_out = None
         values = []
         content_type = CONTENT_TEXT
@@ -524,8 +549,3 @@ class Network:
             return values[0]
 
         return values
-
-    @property
-    def ip_address(self):
-        """Return the IP Address nicely formatted"""
-        return self._wifi.ip_address
