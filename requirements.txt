@@ -11,3 +11,4 @@ adafruit-circuitpython-neopixel
 adafruit-circuitpython-requests
 adafruit-circuitpython-adafruitio
 adafruit-circuitpython-il0373
+adafruit-circuitpython-simpleio
