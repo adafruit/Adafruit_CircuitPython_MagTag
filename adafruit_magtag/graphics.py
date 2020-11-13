@@ -46,7 +46,7 @@ class Graphics:
     """
 
     # pylint: disable=too-many-instance-attributes, too-many-locals, too-many-branches, too-many-statements
-    def __init__(self, *, default_bg=None, auto_refresh=True, debug=False):
+    def __init__(self, *, default_bg=0xFFFFFF, auto_refresh=True, debug=False):
 
         self._debug = debug
         if not hasattr(board, "DISPLAY"):
@@ -139,7 +139,6 @@ class Graphics:
         self._bg_group.append(self._bg_sprite)
         if self.auto_refresh:
             self.display.refresh()
-            sleep(5)
         gc.collect()
 
     def qrcode(

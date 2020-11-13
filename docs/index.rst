@@ -23,14 +23,12 @@ Table of Contents
 .. toctree::
     :caption: Tutorials
 
-.. todo:: Add any Learn guide links here. If there are none, then simply delete this todo and leave
-    the toctree above for use later.
+    * Adafruit MagTag <https://learn.adafruit.com/adafruit-magtag>
 
 .. toctree::
     :caption: Related Products
 
-.. todo:: Add any product links here. If there are none, then simply delete this todo and leave
-    the toctree above for use later.
+    * Adafruit MagTag <https://www.adafruit.com/product/4800>
 
 .. toctree::
     :caption: Other Links

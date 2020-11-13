@@ -65,7 +65,7 @@ class MagTag:
         headers=None,
         json_path=None,
         regexp_path=None,
-        default_bg=None,
+        default_bg=0xFFFFFF,
         status_neopixel=None,
         json_transform=None,
         debug=False,
@@ -74,6 +74,7 @@ class MagTag:
         self._debug = debug
         self.graphics = Graphics(
             default_bg=default_bg,
+            auto_refresh=False,
             debug=debug,
         )
         self.display = self.graphics.display

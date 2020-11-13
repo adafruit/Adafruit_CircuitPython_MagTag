@@ -30,40 +30,49 @@ Please ensure all dependencies are available on the CircuitPython filesystem.
 This is easily achieved by downloading
 `the Adafruit library and driver bundle <https://circuitpython.org/libraries>`_.
 
-Installing from PyPI
-=====================
-.. note:: This library is not available on PyPI yet. Install documentation is included
-   as a standard element. Stay tuned for PyPI availability!
-
-.. todo:: Remove the above note if PyPI version is/will be available at time of release.
-   If the library is not planned for PyPI, remove the entire 'Installing from PyPI' section.
-
-On supported GNU/Linux systems like the Raspberry Pi, you can install the driver locally `from
-PyPI <https://pypi.org/project/adafruit-circuitpython-magtag/>`_. To install for current user:
-
-.. code-block:: shell
-
-    pip3 install adafruit-circuitpython-magtag
-
-To install system-wide (this may be required in some cases):
-
-.. code-block:: shell
-
-    sudo pip3 install adafruit-circuitpython-magtag
-
-To install in a virtual environment in your current project:
-
-.. code-block:: shell
-
-    mkdir project-name && cd project-name
-    python3 -m venv .env
-    source .env/bin/activate
-    pip3 install adafruit-circuitpython-magtag
 
 Usage Example
 =============
 
-.. todo:: Add a quick, simple example. It and other examples should live in the examples folder and be included in docs/examples.rst.
+.. code:: python
+
+    # SPDX-FileCopyrightText: 2017 Scott Shawcroft, written for Adafruit Industries
+    #
+    # SPDX-License-Identifier: Unlicense
+    import time
+    import terminalio
+    from adafruit_magtag.magtag import MagTag
+
+    magtag = MagTag()
+
+    magtag.add_text(
+        text_font=terminalio.FONT,
+        text_position=(
+            50,
+            (magtag.graphics.display.height // 2) - 1,
+        ),
+        text_scale=3,
+    )
+
+    magtag.set_text("Hello World")
+
+    buttons = magtag.peripherals.buttons
+    button_colors = ((255, 0, 0), (255, 150, 0), (0, 255, 255), (180, 0, 255))
+    button_tones = (1047, 1318, 1568, 2093)
+    timestamp = time.monotonic()
+
+    while True:
+        for i, b in enumerate(buttons):
+            if not b.value:
+                print("Button %c pressed" % chr((ord("A") + i)))
+                magtag.peripherals.neopixel_disable = False
+                magtag.peripherals.neopixels.fill(button_colors[i])
+                magtag.peripherals.play_tone(button_tones[i], 0.25)
+                break
+        else:
+            magtag.peripherals.neopixel_disable = True
+        time.sleep(0.01)
+
 
 Contributing
 ============
