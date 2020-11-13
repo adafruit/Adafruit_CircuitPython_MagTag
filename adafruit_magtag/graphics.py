@@ -163,7 +163,7 @@ class Graphics:
                 break
             except RuntimeError:
                 pass
-                #print("Trying with larger code")
+                # print("Trying with larger code")
         else:
             raise RuntimeError("Could not make QR code")
         # monochrome (2 color) palette
