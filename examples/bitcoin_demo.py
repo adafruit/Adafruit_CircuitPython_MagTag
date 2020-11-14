@@ -24,11 +24,12 @@ magtag.network.connect()
 magtag.add_text(
     text_font=terminalio.FONT,
     text_position=(
-        10,
+        (magtag.graphics.display.width // 2) - 1,
         (magtag.graphics.display.height // 2) - 1,
     ),
     text_scale=3,
     text_transform=text_transform,
+    text_anchor_point=(0.5, 0.5),
 )
 
 magtag.preload_font(b"$012345789")  # preload numbers
