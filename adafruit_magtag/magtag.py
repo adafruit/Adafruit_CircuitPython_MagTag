@@ -243,7 +243,10 @@ class MagTag:
             self.add_text()
         string = str(val)
         if self._text_maxlen[index]:
-            string = string[: self._text_maxlen[index]]
+            if len(string) > self._text_maxlen[index]:
+                # too long! shorten it
+                string = string[: self._text_maxlen[index] - 3]
+                string += "..."
         print("text index", self._text[index])
         index_in_splash = None
 
@@ -358,7 +361,7 @@ class MagTag:
                     print("Drawing text", string)
                 if self._text_wrap[i]:
                     if self._debug:
-                        print("Wrapping text")
+                        print("Wrapping text with length of", self._text_wrap[i])
                     lines = self.wrap_nicely(string, self._text_wrap[i])
                     string = "\n".join(lines)
                 self.set_text(string, index=i, auto_refresh=False)
@@ -404,8 +407,8 @@ class MagTag:
         self._url = value
         if value and not self.network.uselocal:
             self.network.connect()
-            if self._debug:
-                print("My IP address is", self.network.ip_address)
+            # if self._debug:
+            #    print("My IP address is", self.network.ip_address)
 
     @property
     def json_path(self):
