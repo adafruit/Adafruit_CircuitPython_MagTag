@@ -237,8 +237,8 @@ class MagTag:
         if self._text_maxlen[index]:
             if len(string) > self._text_maxlen[index]:
                 # too long! shorten it
-                string = string[: self._text_maxlen[index]-3]
-                string += '...'
+                string = string[: self._text_maxlen[index] - 3]
+                string += "..."
         print("text index", self._text[index])
         index_in_splash = None
 
@@ -399,7 +399,7 @@ class MagTag:
         self._url = value
         if value and not self.network.uselocal:
             self.network.connect()
-            #if self._debug:
+            # if self._debug:
             #    print("My IP address is", self.network.ip_address)
 
     @property
