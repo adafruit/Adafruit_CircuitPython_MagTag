@@ -110,6 +110,7 @@ class MagTag:
         self._text_scale = []
         self._text_font = []
         self._text_line_spacing = []
+        self._text_anchor_point = []
 
         gc.collect()
 
@@ -124,6 +125,7 @@ class MagTag:
         text_transform=None,
         text_scale=1,
         line_spacing=1.25,
+        text_anchor_point=(0, 0.5),
     ):
         """
         Add text labels with settings
@@ -153,6 +155,10 @@ class MagTag:
             text_transform = None
         if not isinstance(text_scale, (int, float)) or text_scale < 1:
             text_scale = 1
+        if not isinstance(text_anchor_point, (tuple, list)):
+            text_anchor_point = (0, 0.5)
+        if not 0 <= text_anchor_point[0] <= 1 or not 0 <= text_anchor_point[1] <= 1:
+            raise ValueError("Text anchor point values should be between 0 and 1.")
         text_scale = round(text_scale)
         gc.collect()
 
@@ -166,6 +172,7 @@ class MagTag:
         self._text_transform.append(text_transform)
         self._text_scale.append(text_scale)
         self._text_line_spacing.append(line_spacing)
+        self._text_anchor_point.append(text_anchor_point)
 
     # pylint: enable=too-many-arguments
 
@@ -255,8 +262,8 @@ class MagTag:
                 self._text_font[index], text=string, scale=self._text_scale[index]
             )
             self._text[index].color = self._text_color[index]
-            self._text[index].x = self._text_position[index][0]
-            self._text[index].y = self._text_position[index][1]
+            self._text[index].anchor_point = self._text_anchor_point[index]
+            self._text[index].anchored_position = self._text_position[index]
             self._text[index].line_spacing = self._text_line_spacing[index]
         elif index_in_splash is not None:
             self._text[index] = None
