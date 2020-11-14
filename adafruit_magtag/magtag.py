@@ -119,7 +119,7 @@ class MagTag:
         text_position=(0, 0),
         text_font=terminalio.FONT,
         text_color=0x000000,
-        text_wrap=False,
+        text_wrap=0,
         text_maxlen=0,
         text_transform=None,
         text_scale=1,
@@ -134,8 +134,8 @@ class MagTag:
                               example.
         :param text_color: The color of the text, in 0xRRGGBB format. Can be a list of colors for
                            when there's multiple texts. Defaults to ``None``.
-        :param text_wrap: Whether or not to wrap text (for long text data chunks). Defaults to
-                          ``False``, no wrapping.
+        :param text_wrap: When non-zero, the maximum number of characters on each line before text
+                          is wrapped. (for long text data chunks). Defaults to 0, no wrapping.
         :param text_maxlen: The max length of the text. If non-zero, it will be truncated to this
                             length. Defaults to 0.
         :param text_transform: A function that will be called on the text before display
