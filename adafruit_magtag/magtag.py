@@ -110,7 +110,6 @@ class MagTag:
         self._text_scale = []
         self._text_font = []
         self._text_line_spacing = []
-        self._text_fetch_update = []
 
         gc.collect()
 
@@ -125,7 +124,6 @@ class MagTag:
         text_transform=None,
         text_scale=1,
         line_spacing=1.25,
-        update_on_fetch=True,
     ):
         """
         Add text labels with settings
@@ -142,7 +140,6 @@ class MagTag:
                             length. Defaults to 0.
         :param text_transform: A function that will be called on the text before display
         :param int text_scale: The factor to scale the default size of the text by
-        :param bool update_on_fetch: When ``True``, fetch_data() will automatically update the text
         """
         if text_font is terminalio.FONT:
             self._text_font.append(text_font)
@@ -169,7 +166,6 @@ class MagTag:
         self._text_transform.append(text_transform)
         self._text_scale.append(text_scale)
         self._text_line_spacing.append(line_spacing)
-        self._text_fetch_update.append(update_on_fetch)
 
     # pylint: enable=too-many-arguments
 
@@ -338,10 +334,6 @@ class MagTag:
             regexp_path=self._regexp_path,
             timeout=timeout,
         )
-
-        """
-        Loop through the text blocks and create a list of indexes to update
-        """
 
         # fill out all the text blocks
         if self._text:
