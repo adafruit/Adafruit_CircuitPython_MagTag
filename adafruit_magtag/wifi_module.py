@@ -64,7 +64,6 @@ class WiFi:
         :param password: The WiFi password
 
         """
-        print(ssid, password)
         wifi.radio.connect(ssid, password)
         pool = socketpool.SocketPool(wifi.radio)
         self.requests = adafruit_requests.Session(pool, ssl.create_default_context())

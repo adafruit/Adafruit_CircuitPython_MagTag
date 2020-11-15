@@ -101,7 +101,6 @@ class Graphics:
         :param tuple position: Optional x and y coordinates to place the background at.
 
         """
-        print("Set background to", file_or_color)
         while self._bg_group:
             self._bg_group.pop()
 
@@ -114,7 +113,6 @@ class Graphics:
             self._bg_file.close()
         if isinstance(file_or_color, str):  # its a filenme:
             self._bg_file = open(file_or_color, "rb")
-            print("Displaying image file")
             background = displayio.OnDiskBitmap(self._bg_file)
             self._bg_sprite = displayio.TileGrid(
                 background,
@@ -124,7 +122,6 @@ class Graphics:
             )
         elif isinstance(file_or_color, int):
             # Make a background color fill
-            print("Displaying color")
             color_bitmap = displayio.Bitmap(self.display.width, self.display.height, 1)
             color_palette = displayio.Palette(1)
             color_palette[0] = file_or_color
