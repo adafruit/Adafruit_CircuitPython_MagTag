@@ -247,7 +247,6 @@ class MagTag:
                 # too long! shorten it
                 string = string[: self._text_maxlen[index] - 3]
                 string += "..."
-        print("text index", self._text[index])
         index_in_splash = None
 
         if self._text[index] is not None:
