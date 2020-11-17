@@ -249,6 +249,12 @@ class MagTag:
                 string += "..."
         index_in_splash = None
 
+        if len(string) > 0 and self._text_wrap[index]:
+            if self._debug:
+                print("Wrapping text with length of", self._text_wrap[index])
+            lines = self.wrap_nicely(string, self._text_wrap[index])
+            string = "\n".join(lines)
+
         if self._text[index] is not None:
             if self._debug:
                 print("Replacing text area with :", string)
@@ -356,13 +362,6 @@ class MagTag:
                         string = "{:,d}".format(int(values[i]))
                     except (TypeError, ValueError):
                         string = values[i]  # ok its a string
-                if self._debug:
-                    print("Drawing text", string)
-                if self._text_wrap[i]:
-                    if self._debug:
-                        print("Wrapping text with length of", self._text_wrap[i])
-                    lines = self.wrap_nicely(string, self._text_wrap[i])
-                    string = "\n".join(lines)
                 self.set_text(string, index=i, auto_refresh=False)
         self.refresh()
         if len(values) == 1:
