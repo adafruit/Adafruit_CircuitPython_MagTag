@@ -86,3 +86,38 @@ class Peripherals:
     @neopixel_disable.setter
     def neopixel_disable(self, value):
         self._neopixel_disable.value = value
+
+    @property
+    def button_a_pressed(self):
+        """
+        Return whether Button A is pressed
+        """
+        return not self.buttons[0].value
+
+    @property
+    def button_b_pressed(self):
+        """
+        Return whether Button B is pressed
+        """
+        return not self.buttons[1].value
+
+    @property
+    def button_c_pressed(self):
+        """
+        Return whether Button C is pressed
+        """
+        return not self.buttons[2].value
+
+    @property
+    def button_d_pressed(self):
+        """
+        Return whether Button D is pressed
+        """
+        return not self.buttons[3].value
+
+    @property
+    def any_button_pressed(self):
+        """
+        Return whether any button is pressed
+        """
+        return False in [self.buttons[i].value for i in range(0, 4)]
