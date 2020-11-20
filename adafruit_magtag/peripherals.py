@@ -130,4 +130,3 @@ class Peripherals:
         Return whether any button is pressed
         """
         return False in [self.buttons[i].value for i in range(0, 4)]
-
