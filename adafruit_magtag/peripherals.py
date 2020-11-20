@@ -65,10 +65,19 @@ class Peripherals:
     def play_tone(self, frequency, duration):
         """Automatically Enable/Disable the speaker and play
         a tone at the specified frequency for the specified duration
-
+        It will attempt to play the sound up to 3 times in the case of
+        an error.
         """
         self._speaker_enable.value = True
-        simpleio.tone(board.SPEAKER, frequency, duration)
+        attempt = 0
+        # Try up to 3 times to play the sound
+        while attempt < 3:
+            try:
+                simpleio.tone(board.SPEAKER, frequency, duration)
+                break
+            except NameError:
+                pass
+            attempt += 1
         self._speaker_enable.value = False
 
     @property
@@ -121,3 +130,4 @@ class Peripherals:
         Return whether any button is pressed
         """
         return False in [self.buttons[i].value for i in range(0, 4)]
+
