@@ -398,7 +398,7 @@ class MagTag:
         """
         Get or set the URL of your data source.
         """
-        return self._json_path
+        return self._url
 
     @url.setter
     def url(self, value):
