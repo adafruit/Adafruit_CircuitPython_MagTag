@@ -155,8 +155,6 @@ class Network:
     def get_local_time(self, location=None):
         # pylint: disable=line-too-long
         """
-        NOTE: Do not use yet. This is currently not working.
-
         Fetch and "set" the local time of this microcontroller to the local time at the location, using an internet time API.
 
         :param str location: Your city and country, e.g. ``"New York, US"``.
@@ -319,12 +317,10 @@ class Network:
                 "Adafruit IO secrets are kept in secrets.py, please add them there!\n\n"
             ) from KeyError
 
-        return IO_HTTP(aio_username, aio_key, self._wifi.manager(secrets))
+        return IO_HTTP(aio_username, aio_key, self._wifi.requests)
 
     def push_to_io(self, feed_key, data):
         """Push data to an adafruit.io feed
-
-        NOTE: Do not use yet. This is currently not working.
 
         :param str feed_key: Name of feed key to push data to.
         :param data: data to send to feed
@@ -358,8 +354,6 @@ class Network:
     def get_io_feed(self, feed_key, detailed=False):
         """Return the Adafruit IO Feed that matches the feed key
 
-        NOTE: Do not use yet. This is currently not working.
-
         :param str feed_key: Name of feed key to match.
         :param bool detailed: Whether to return additional detailed information
 
@@ -377,8 +371,6 @@ class Network:
     def get_io_group(self, group_key):
         """Return the Adafruit IO Group that matches the group key
 
-        NOTE: Do not use yet. This is currently not working.
-
         :param str group_key: Name of group key to match.
 
         """
@@ -394,8 +386,6 @@ class Network:
 
     def get_io_data(self, feed_key):
         """Return all values from Adafruit IO Feed Data that matches the feed key
-
-        NOTE: Do not use yet. This is currently not working.
 
         :param str feed_key: Name of feed key to receive data from.
 
