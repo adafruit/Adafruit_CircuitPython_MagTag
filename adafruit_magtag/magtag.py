@@ -329,11 +329,11 @@ class MagTag:
         Refresh the display
         """
         while True:
-           try:
-               self.graphics.display.refresh()
-               return
-           except RuntimeError:
-               time.sleep(1)
+            try:
+                self.graphics.display.refresh()
+                return
+            except RuntimeError:
+                time.sleep(1)
 
     def fetch(self, refresh_url=None, timeout=10):
         """Fetch data from the url we initialized with, perfom any parsing,
