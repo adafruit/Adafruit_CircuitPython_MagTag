@@ -26,6 +26,7 @@ Implementation Notes
 """
 
 import gc
+import time
 import terminalio
 from adafruit_bitmap_font import bitmap_font
 from adafruit_display_text.label import Label
@@ -327,7 +328,12 @@ class MagTag:
         """
         Refresh the display
         """
-        self.graphics.display.refresh()
+        while True:
+           try:
+               self.graphics.display.refresh()
+               return
+           except RuntimeError:
+               time.sleep(1)
 
     def fetch(self, refresh_url=None, timeout=10):
         """Fetch data from the url we initialized with, perfom any parsing,
