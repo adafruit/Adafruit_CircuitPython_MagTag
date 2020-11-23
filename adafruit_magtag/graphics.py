@@ -70,7 +70,7 @@ class Graphics:
                 color_bits_inverted=False,
                 grayscale=True,
                 refresh_time=1,
-                seconds_per_frame=5,
+                seconds_per_frame=1,
             )
         else:
             self.display = board.DISPLAY
