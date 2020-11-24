@@ -137,7 +137,12 @@ class Network:
                 "The json_path parameter should be enclosed in a list or tuple."
             )
         for x in path:
-            value = value[x]
+            try:
+                value = value[x]
+            except TypeError as error:
+                raise ValueError(
+                    "The specified json_path was not found in the results."
+                ) from error
             gc.collect()
         return value
 
@@ -512,7 +517,7 @@ class Network:
                 raise
 
         # extract desired text/values from json
-        if json_out and json_path:
+        if json_out is not None and json_path:
             for path in json_path:
                 try:
                     values.append(self.json_traverse(json_out, path))

@@ -112,6 +112,7 @@ class MagTag:
         self._text_font = []
         self._text_line_spacing = []
         self._text_anchor_point = []
+        self._text_is_data = []
 
         gc.collect()
 
@@ -127,6 +128,7 @@ class MagTag:
         text_scale=1,
         line_spacing=1.25,
         text_anchor_point=(0, 0.5),
+        is_data=True,
     ):
         """
         Add text labels with settings
@@ -143,6 +145,10 @@ class MagTag:
                             length. Defaults to 0.
         :param text_transform: A function that will be called on the text before display
         :param int text_scale: The factor to scale the default size of the text by
+        :param float line_spacing: The factor to space the lines apart
+        :param (float, float) text_anchor_point: Values between 0 and 1 to indicate where the text
+                                                 position is relative to the label
+        :param bool is_data: If True, fetch will attempt to update the label
         """
         if text_font is terminalio.FONT:
             self._text_font.append(text_font)
@@ -174,6 +180,7 @@ class MagTag:
         self._text_scale.append(text_scale)
         self._text_line_spacing.append(line_spacing)
         self._text_anchor_point.append(text_anchor_point)
+        self._text_is_data.append(bool(is_data))
 
     # pylint: enable=too-many-arguments
 
@@ -358,17 +365,21 @@ class MagTag:
 
         # fill out all the text blocks
         if self._text:
+            value_index = 0  # In case values and text is not the same
             for i in range(len(self._text)):
+                if not self._text_is_data[i]:
+                    continue
                 string = None
                 if self._text_transform[i]:
                     func = self._text_transform[i]
-                    string = func(values[i])
+                    string = func(values[value_index])
                 else:
                     try:
-                        string = "{:,d}".format(int(values[i]))
+                        string = "{:,d}".format(int(values[value_index]))
                     except (TypeError, ValueError):
-                        string = values[i]  # ok its a string
+                        string = values[value_index]  # ok its a string
                 self.set_text(string, index=i, auto_refresh=False)
+                value_index += 1
         self.refresh()
         if len(values) == 1:
             return values[0]
