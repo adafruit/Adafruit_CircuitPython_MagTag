@@ -10,6 +10,6 @@ Ensure your device works with this simple test.
 Other Demos
 ------------
 
-.. literalinclude:: ../examples/bitcoin_demo.py
-    :caption: examples/bitcoin_demo.py
+.. literalinclude:: ../examples/magtag_bitcoin_demo.py
+    :caption: examples/magtag_bitcoin_demo.py
     :linenos:
