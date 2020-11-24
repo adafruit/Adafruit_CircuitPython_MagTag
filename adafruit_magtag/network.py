@@ -139,7 +139,7 @@ class Network:
         for x in path:
             try:
                 value = value[x]
-            except (TypeError, KeyError) as error:
+            except (TypeError, KeyError, IndexError) as error:
                 raise ValueError(
                     "The specified json_path was not found in the results."
                 ) from error
