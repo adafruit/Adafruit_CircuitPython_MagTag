@@ -133,7 +133,7 @@ class MagTag:
         """
         Add text labels with settings
 
-        :param str text_font: The path to your font file for your data text display.
+        :param Union[BuiltInFont, str] text_font: The path to your font file for your data text display.
         :param text_position: The position of your extracted text on the display in an (x, y) tuple.
                               Can be a list of tuples for when there's a list of json_paths, for
                               example.
