@@ -182,6 +182,8 @@ class MagTag:
         self._text_anchor_point.append(text_anchor_point)
         self._text_is_data.append(bool(is_data))
 
+        return len(self._text) - 1
+
     # pylint: enable=too-many-arguments
 
     @staticmethod
