@@ -300,11 +300,13 @@ class MagTag:
         if auto_refresh:
             self.refresh()
 
-    def exit_and_enter_deep_sleep(self, sleep_time):
+    def exit_and_deep_sleep(self, sleep_time):
         """
         Stops the current program and enters deep sleep. The program is restarted from the beginning
-        after a certain period of time. If USB is plugged into a computer, it won't enter a true
-        deep sleep.
+        after a certain period of time.
+
+        See https://circuitpython.readthedocs.io/en/latest/shared-bindings/alarm/index.html for more
+        details.
 
         :param float sleep_time: The amount of time to sleep in seconds
 
@@ -324,8 +326,10 @@ class MagTag:
 
     def enter_light_sleep(self, sleep_time):
         """
-        Enter light sleep and resume the program after a certain period of time.  If USB
-        is plugged into a computer, it won't enter a true light sleep.
+        Enter light sleep and resume the program after a certain period of time.
+
+        See https://circuitpython.readthedocs.io/en/latest/shared-bindings/alarm/index.html for more
+        details.
 
         :param float sleep_time: The amount of time to sleep in seconds
 
