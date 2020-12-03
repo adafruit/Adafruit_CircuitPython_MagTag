@@ -303,7 +303,8 @@ class MagTag:
     def exit_and_enter_deep_sleep(self, sleep_time):
         """
         Stops the current program and enters deep sleep. The program is restarted from the beginning
-        after a certain period of time. If USB is plugged in, it won't enter a true deep sleep.
+        after a certain period of time. If USB is plugged into a computer, it won't enter a true
+        deep sleep.
 
         :param float sleep_time: The amount of time to sleep in seconds
 
@@ -323,7 +324,7 @@ class MagTag:
     def enter_light_sleep(self, sleep_time):
         """
         Enter light sleep and resume the program after a certain period of time.  If USB
-        is plugged in, it won't enter a true light sleep.
+        is plugged into a computer, it won't enter a true light sleep.
 
         :param float sleep_time: The amount of time to sleep in seconds
 
