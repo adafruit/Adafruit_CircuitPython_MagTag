@@ -93,3 +93,17 @@ class WiFi:
 
         """
         return wifi.radio.ipv4_address
+
+    @property
+    def enabled(self):
+        """
+        Return or set whether the WiFi Radio is enabled
+
+        """
+        return wifi.radio.enabled
+
+    @enabled.setter
+    def enabled(self, value):
+        if not value:
+            self._connected = False
+        wifi.radio.enabled = bool(value)
