@@ -300,9 +300,10 @@ class MagTag:
         if auto_refresh:
             self.refresh()
 
-    def enter_deep_sleep(self, sleep_time):
+    def enter_deep_sleep_and_restart(self, sleep_time):
         """
-        Enter deep sleep and restart the program after a certain amount of time
+        Stops the current program and enters deep sleep. The program is restarted from the beginning
+        after a certain period of time.
 
         :param float sleep_time: The amount of time to sleep in seconds
 
@@ -321,12 +322,13 @@ class MagTag:
 
     def enter_light_sleep(self, sleep_time):
         """
-        Enter light sleep and resume the program after a certain amount of time
+        Enter light sleep and resume the program after a certain period of time.
 
         :param float sleep_time: The amount of time to sleep in seconds
 
         """
         if self._alarm:
+            neopixel_values = self.peripherals.neopixels
             neopixel_state = self.peripherals.neopixel_disable
             self.peripherals.neopixel_disable = True
             speaker_state = self.peripherals.speaker_disable
@@ -335,9 +337,10 @@ class MagTag:
                 monotonic_time=time.monotonic() + sleep_time
             )
             self._alarm.light_sleep_until_alarms(pause)
-
             self.peripherals.neopixel_disable = neopixel_state
             self.peripherals.speaker_disable = speaker_state
+            for i in range(4):
+                self.peripherals.neopixels[i] = neopixel_values[i]
             gc.collect()
         else:
             raise NotImplementedError(
