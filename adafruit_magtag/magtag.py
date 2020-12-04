@@ -314,7 +314,6 @@ class MagTag:
         if self._alarm:
             self.peripherals.neopixel_disable = True
             self.peripherals.speaker_disable = True
-            self.network.enabled = False
             pause = self._alarm.time.TimeAlarm(
                 monotonic_time=time.monotonic() + sleep_time
             )
@@ -340,13 +339,10 @@ class MagTag:
             self.peripherals.neopixel_disable = True
             speaker_state = self.peripherals.speaker_disable
             self.peripherals.speaker_disable = True
-            network_state = self.network.enabled
-            self.network.enabled = False
             pause = self._alarm.time.TimeAlarm(
                 monotonic_time=time.monotonic() + sleep_time
             )
             self._alarm.light_sleep_until_alarms(pause)
-            self.network.enabled = network_state
             self.peripherals.neopixel_disable = neopixel_state
             self.peripherals.speaker_disable = speaker_state
             for i in range(4):
