@@ -544,3 +544,11 @@ class Network:
             return values[0]
 
         return values
+
+    @property
+    def enabled(self):
+        """
+        Return whether the WiFi is enabled
+
+        """
+        return self._wifi.enabled
