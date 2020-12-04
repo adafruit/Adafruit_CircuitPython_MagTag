@@ -95,6 +95,13 @@ class MagTag:
         # Font Cache
         self._fonts = {}
 
+        try:
+            import alarm  # pylint: disable=import-outside-toplevel
+
+            self._alarm = alarm
+        except ImportError:
+            self._alarm = None
+
         self._regexp_path = regexp_path
 
         self.splash = self.graphics.splash
@@ -308,6 +315,59 @@ class MagTag:
             self.splash.append(self._text[index])
         if auto_refresh:
             self.refresh()
+
+    def exit_and_deep_sleep(self, sleep_time):
+        """
+        Stops the current program and enters deep sleep. The program is restarted from the beginning
+        after a certain period of time.
+
+        See https://circuitpython.readthedocs.io/en/latest/shared-bindings/alarm/index.html for more
+        details.
+
+        :param float sleep_time: The amount of time to sleep in seconds
+
+        """
+        if self._alarm:
+            self.peripherals.neopixel_disable = True
+            self.peripherals.speaker_disable = True
+            pause = self._alarm.time.TimeAlarm(
+                monotonic_time=time.monotonic() + sleep_time
+            )
+            self._alarm.exit_and_deep_sleep_until_alarms(pause)
+        else:
+            raise NotImplementedError(
+                "Deep sleep not supported. Make sure you have the latest CircuitPython."
+            )
+
+    def enter_light_sleep(self, sleep_time):
+        """
+        Enter light sleep and resume the program after a certain period of time.
+
+        See https://circuitpython.readthedocs.io/en/latest/shared-bindings/alarm/index.html for more
+        details.
+
+        :param float sleep_time: The amount of time to sleep in seconds
+
+        """
+        if self._alarm:
+            neopixel_values = self.peripherals.neopixels
+            neopixel_state = self.peripherals.neopixel_disable
+            self.peripherals.neopixel_disable = True
+            speaker_state = self.peripherals.speaker_disable
+            self.peripherals.speaker_disable = True
+            pause = self._alarm.time.TimeAlarm(
+                monotonic_time=time.monotonic() + sleep_time
+            )
+            self._alarm.light_sleep_until_alarms(pause)
+            self.peripherals.neopixel_disable = neopixel_state
+            self.peripherals.speaker_disable = speaker_state
+            for i in range(4):
+                self.peripherals.neopixels[i] = neopixel_values[i]
+            gc.collect()
+        else:
+            raise NotImplementedError(
+                "Hardware light sleep not supported. Make sure you have the latest CircuitPython."
+            )
 
     def get_local_time(self, location=None):
         """Accessor function for get_local_time()"""

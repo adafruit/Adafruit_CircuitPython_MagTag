@@ -97,6 +97,17 @@ class Peripherals:
         self._neopixel_disable.value = value
 
     @property
+    def speaker_disable(self):
+        """
+        Enable or disable the speaker for power savings
+        """
+        return not self._speaker_enable.value
+
+    @speaker_disable.setter
+    def speaker_disable(self, value):
+        self._speaker_enable.value = not value
+
+    @property
     def button_a_pressed(self):
         """
         Return whether Button A is pressed
