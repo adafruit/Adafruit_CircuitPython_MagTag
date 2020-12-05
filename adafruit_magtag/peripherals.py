@@ -85,7 +85,7 @@ class Peripherals:
     @property
     def battery(self):
         """Return the voltage of the battery"""
-        return (self._batt_monitor.value / 65535.0) * 2.6 * 2
+        return (self._batt_monitor.value / 65535.0) * 3.3 * 2
 
     @property
     def neopixel_disable(self):
