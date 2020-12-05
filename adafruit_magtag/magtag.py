@@ -92,6 +92,9 @@ class MagTag:
         self._json_path = None
         self.json_path = json_path
 
+        # Font Cache
+        self._fonts = {}
+
         try:
             import alarm  # pylint: disable=import-outside-toplevel
 
@@ -157,10 +160,7 @@ class MagTag:
                                                  position is relative to the label
         :param bool is_data: If True, fetch will attempt to update the label
         """
-        if text_font is terminalio.FONT:
-            self._text_font.append(text_font)
-        else:
-            self._text_font.append(bitmap_font.load_font(text_font))
+
         if not text_wrap:
             text_wrap = 0
         if not text_maxlen:
@@ -179,6 +179,7 @@ class MagTag:
         if self._debug:
             print("Init text area")
         self._text.append(None)
+        self._text_font.append(self._load_font(text_font))
         self._text_color.append(self.html_color_convert(text_color))
         self._text_position.append(text_position)
         self._text_wrap.append(text_wrap)
@@ -192,6 +193,19 @@ class MagTag:
         return len(self._text) - 1
 
     # pylint: enable=too-many-arguments
+
+    def _load_font(self, font):
+        """
+        Load and cache a font if not previously loaded
+        Return the key of the cached font
+        """
+        if font is terminalio.FONT:
+            if "terminal" not in self._fonts:
+                self._fonts["terminal"] = terminalio.FONT
+            return "terminal"
+        if font not in self._fonts:
+            self._fonts[font] = bitmap_font.load_font(font)
+        return font
 
     @staticmethod
     def html_color_convert(color):
@@ -233,8 +247,8 @@ class MagTag:
         if not glyphs:
             glyphs = b"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-!,. \"'?!"
         print("Preloading font glyphs:", glyphs)
-        if self._text_font[index] is not terminalio.FONT:
-            self._text_font[index].load_glyphs(glyphs)
+        if self._fonts[self._text_font[index]] is not terminalio.FONT:
+            self._fonts[self._text_font[index]].load_glyphs(glyphs)
 
     def set_text_color(self, color, index=0):
         """Update the text color, with indexing into our list of text boxes.
@@ -281,7 +295,9 @@ class MagTag:
 
         if len(string) > 0:
             self._text[index] = Label(
-                self._text_font[index], text=string, scale=self._text_scale[index]
+                self._fonts[self._text_font[index]],
+                text=string,
+                scale=self._text_scale[index],
             )
             self._text[index].color = self._text_color[index]
             self._text[index].anchor_point = self._text_anchor_point[index]
