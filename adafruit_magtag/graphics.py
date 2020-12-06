@@ -47,7 +47,9 @@ class Graphics:
     """
 
     # pylint: disable=too-many-instance-attributes, too-many-locals, too-many-branches, too-many-statements
-    def __init__(self, *, default_bg=0xFFFFFF, auto_refresh=True, rotation=270, debug=False):
+    def __init__(
+        self, *, default_bg=0xFFFFFF, auto_refresh=True, rotation=270, debug=False
+    ):
 
         self._debug = debug
         if not hasattr(board, "DISPLAY"):
