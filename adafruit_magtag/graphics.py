@@ -41,12 +41,13 @@ class Graphics:
                        Defaults to 0x000000.
     :param bool auto_refresh: Automatically refresh the eInk after writing to displayio.
                               Defaults to True.
+    :param rotation: Default rotation is landscape (270) but can be 0, 90, 180 for portrait/rotated
     :param debug: Turn on debug print outs. Defaults to False.
 
     """
 
     # pylint: disable=too-many-instance-attributes, too-many-locals, too-many-branches, too-many-statements
-    def __init__(self, *, default_bg=0xFFFFFF, auto_refresh=True, debug=False):
+    def __init__(self, *, default_bg=0xFFFFFF, auto_refresh=True, rotation=270, debug=False):
 
         self._debug = debug
         if not hasattr(board, "DISPLAY"):
@@ -65,7 +66,7 @@ class Graphics:
                 display_bus,
                 width=296,
                 height=128,
-                rotation=270,
+                rotation=rotation,
                 black_bits_inverted=False,
                 color_bits_inverted=False,
                 grayscale=True,
@@ -74,6 +75,7 @@ class Graphics:
             )
         else:
             self.display = board.DISPLAY
+            self.display.rotation = rotation
 
         self.auto_refresh = auto_refresh
 
