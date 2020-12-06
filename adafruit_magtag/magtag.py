@@ -54,7 +54,8 @@ class MagTag:
                             NeoPixel. Defaults to ``None``, not the status LED
     :param json_transform: A function or a list of functions to call with the parsed JSON.
                            Changes and additions are permitted for the ``dict`` object.
-    :param rotation: Default rotation is landscape (270) but can be 0, 90, or 180 for portrait/rotated
+    :param rotation: Default rotation is landscape (270) but can be 0, 90, or 180 for
+                     portrait/rotated
     :param debug: Turn on debug print outs. Defaults to False.
 
     """
