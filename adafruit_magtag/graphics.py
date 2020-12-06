@@ -38,7 +38,7 @@ class Graphics:
     """Graphics Helper Class for the MagTag Library
 
     :param default_bg: The path to your default background image file or a hex color.
-                       Defaults to 0x000000.
+                       Defaults to 0xFFFFFF.
     :param bool auto_refresh: Automatically refresh the eInk after writing to displayio.
                               Defaults to True.
     :param rotation: Default rotation is landscape (270) but can be 0, 90, 180 for portrait/rotated
