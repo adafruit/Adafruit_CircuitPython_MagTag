@@ -40,15 +40,21 @@ class Graphics(GraphicsBase):
     """Graphics Helper Class for the MagTag Library
 
     :param default_bg: The path to your default background image file or a hex color.
-                       Defaults to 0x000000.
+                       Defaults to 0xFFFFFF.
     :param bool auto_refresh: Automatically refresh the eInk after writing to displayio.
                               Defaults to True.
+    :param rotation: Default rotation is landscape (270) but can be 0, 90, 180 for portrait/rotated
     :param debug: Turn on debug print outs. Defaults to False.
 
     """
 
     # pylint: disable=too-many-instance-attributes, too-many-locals, too-many-branches, too-many-statements
-    def __init__(self, *, default_bg=0xFFFFFF, auto_refresh=True, debug=False):
+    def __init__(
+        self, *, default_bg=0xFFFFFF, auto_refresh=True, rotation=270, debug=False
+    ):
+        self._debug = debug
+        self.display = board.DISPLAY
+        self.display.rotation = rotation
         self.auto_refresh = auto_refresh
         self._qr_group = None
 
