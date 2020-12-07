@@ -1,8 +1,5 @@
 
 
-.. automodule:: adafruit_magtag.fakerequests
-   :members:
-
 .. automodule:: adafruit_magtag.graphics
    :members:
 
