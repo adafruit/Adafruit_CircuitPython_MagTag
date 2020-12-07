@@ -142,6 +142,7 @@ class MagTag(PortalBase):
             self.peripherals.neopixels[i] = neopixel_values[i]
         gc.collect()
 
+    # pylint: disable=arguments-differ
     def set_text(self, val, index=0, auto_refresh=True):
         """Display text, with indexing into our list of text boxes.
 
@@ -154,6 +155,8 @@ class MagTag(PortalBase):
         super().set_text(val, index)
         if auto_refresh:
             self.refresh()
+
+    # pylint: enable=arguments-differ
 
     def _fetch_set_text(self, val, index=0):
         self.set_text(val, index=index, auto_refresh=False)
