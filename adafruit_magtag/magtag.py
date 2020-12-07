@@ -114,7 +114,7 @@ class MagTag(PortalBase):
         :param float sleep_time: The amount of time to sleep in seconds
 
         """
-        if self.alarm:
+        if self._alarm:
             self.peripherals.neopixel_disable = True
             self.peripherals.speaker_disable = True
         super().exit_and_deep_sleep(sleep_time)
@@ -129,7 +129,7 @@ class MagTag(PortalBase):
         :param float sleep_time: The amount of time to sleep in seconds
 
         """
-        if self.alarm:
+        if self._alarm:
             neopixel_values = self.peripherals.neopixels
             neopixel_state = self.peripherals.neopixel_disable
             self.peripherals.neopixel_disable = True
