@@ -23,6 +23,8 @@ Implementation Notes
 * Adafruit CircuitPython firmware for the supported boards:
   https://github.com/adafruit/circuitpython/releases
 
+* Adafruit's PortalBase library: https://github.com/adafruit/Adafruit_CircuitPython_PortalBase
+
 """
 
 import gc
