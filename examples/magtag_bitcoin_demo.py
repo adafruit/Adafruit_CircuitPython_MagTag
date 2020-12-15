@@ -29,8 +29,6 @@ magtag.add_text(
     text_anchor_point=(0.5, 0.5),
 )
 
-magtag.preload_font(b"$012345789")  # preload numbers
-
 try:
     value = magtag.fetch()
     print("Response is", value)
