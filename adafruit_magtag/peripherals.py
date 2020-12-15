@@ -56,6 +56,9 @@ class Peripherals:
         self._speaker_enable.direction = Direction.OUTPUT
         self._speaker_enable.value = False
 
+        # Battery Voltage
+        self._light = AnalogIn(board.LIGHT)
+
         # Buttons
         self.buttons = []
         for pin in (board.BUTTON_A, board.BUTTON_B, board.BUTTON_C, board.BUTTON_D):
@@ -143,3 +146,21 @@ class Peripherals:
         Return whether any button is pressed
         """
         return False in [self.buttons[i].value for i in range(0, 4)]
+
+    @property
+    def light(self):
+        """
+        Return the value of the light sensor. The neopixel_disable property
+        must be false to get a value.
+        .. code-block:: python
+
+            import time
+            from adafruit_magtag.magtag import MagTag
+
+            magtag = MagTag()
+
+            while True:
+                print(magtag.peripherals.light)
+                time.sleep(0.01)
+        """
+        return self._light.value
