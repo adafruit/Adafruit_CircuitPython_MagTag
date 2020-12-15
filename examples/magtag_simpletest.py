@@ -19,8 +19,6 @@ magtag.set_text("Hello World")
 button_colors = ((255, 0, 0), (255, 150, 0), (0, 255, 255), (180, 0, 255))
 button_tones = (1047, 1318, 1568, 2093)
 
-timestamp = time.monotonic()
-
 while True:
     for i, b in enumerate(magtag.peripherals.buttons):
         if not b.value:
