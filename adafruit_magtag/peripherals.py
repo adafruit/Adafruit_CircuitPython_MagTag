@@ -152,5 +152,15 @@ class Peripherals:
         """
         Return the value of the light sensor. The neopixel_disable property
         must be false to get a value.
+        .. code-block:: python
+
+            import time
+            from adafruit_magtag.magtag import MagTag
+
+            magtag = MagTag()
+
+            while True:
+                print(magtag.peripherals.light)
+                time.sleep(0.01)
         """
         return self._light.value
