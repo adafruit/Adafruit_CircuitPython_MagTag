@@ -2,13 +2,11 @@
 #
 # SPDX-License-Identifier: Unlicense
 import time
-import terminalio
 from adafruit_magtag.magtag import MagTag
 
 magtag = MagTag()
 
 magtag.add_text(
-    text_font=terminalio.FONT,
     text_position=(
         50,
         (magtag.graphics.display.height // 2) - 1,
@@ -18,13 +16,13 @@ magtag.add_text(
 
 magtag.set_text("Hello World")
 
-buttons = magtag.peripherals.buttons
 button_colors = ((255, 0, 0), (255, 150, 0), (0, 255, 255), (180, 0, 255))
 button_tones = (1047, 1318, 1568, 2093)
+
 timestamp = time.monotonic()
 
 while True:
-    for i, b in enumerate(buttons):
+    for i, b in enumerate(magtag.peripherals.buttons):
         if not b.value:
             print("Button %c pressed" % chr((ord("A") + i)))
             magtag.peripherals.neopixel_disable = False

@@ -1,8 +1,6 @@
 # SPDX-FileCopyrightText: 2017 Scott Shawcroft, written for Adafruit Industries
 #
 # SPDX-License-Identifier: Unlicense
-import time
-import terminalio
 from adafruit_magtag.magtag import MagTag
 
 # Set up where we'll be fetching data from
@@ -22,7 +20,6 @@ magtag = MagTag(
 magtag.network.connect()
 
 magtag.add_text(
-    text_font=terminalio.FONT,
     text_position=(
         (magtag.graphics.display.width // 2) - 1,
         (magtag.graphics.display.height // 2) - 1,
@@ -33,15 +30,10 @@ magtag.add_text(
 )
 
 magtag.preload_font(b"$012345789")  # preload numbers
-magtag.preload_font((0x00A3, 0x20AC))  # preload gbp/euro symbol
 
-timestamp = None
-
-while True:
-    if not timestamp or (time.monotonic() - timestamp) > 60:  # once every 60 seconds...
-        try:
-            value = magtag.fetch()
-            print("Response is", value)
-        except (ValueError, RuntimeError) as e:
-            print("Some error occured, retrying! -", e)
-        timestamp = time.monotonic()
+try:
+    value = magtag.fetch()
+    print("Response is", value)
+except (ValueError, RuntimeError) as e:
+    print("Some error occured, retrying! -", e)
+magtag.exit_and_deep_sleep(60)
