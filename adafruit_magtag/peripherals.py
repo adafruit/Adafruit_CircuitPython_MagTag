@@ -56,7 +56,7 @@ class Peripherals:
         self._speaker_enable.direction = Direction.OUTPUT
         self._speaker_enable.value = False
 
-        # Battery Voltage
+        # Light Sensor
         self._light = AnalogIn(board.LIGHT)
 
         # Buttons
