@@ -161,7 +161,8 @@ class MagTag(PortalBase):
     def _fetch_set_text(self, val, index=0):
         self.set_text(val, index=index, auto_refresh=False)
 
-    def fetch(self, refresh_url=None, timeout=10):
+    # pylint: disable=arguments-differ
+    def fetch(self, refresh_url=None, timeout=10, auto_refresh=True):
         """Fetch data from the url we initialized with, perfom any parsing,
         and display text or graphics. This function does pretty much everything
         Optionally update the URL
@@ -172,8 +173,11 @@ class MagTag(PortalBase):
         """
 
         values = super().fetch(refresh_url=refresh_url, timeout=timeout)
-        self.refresh()
+        if auto_refresh:
+            self.refresh()
         return values
+
+    # pylint: enable=arguments-differ
 
     def refresh(self):
         """
