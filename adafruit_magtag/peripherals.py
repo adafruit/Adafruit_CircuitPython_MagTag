@@ -87,6 +87,16 @@ class Peripherals:
             attempt += 1
         self._speaker_enable.value = False
 
+    def deinit(self):
+        """Call deinit on all resources to free them"""
+        self.neopixels.deinit()
+        self._neopixel_disable.deinit()
+        self._speaker_enable.deinit()
+        for button in self.buttons:
+            button.deinit()
+        self._batt_monitor.deinit()
+        self._light.deinit()
+
     @property
     def battery(self):
         """Return the voltage of the battery"""
