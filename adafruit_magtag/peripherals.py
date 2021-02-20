@@ -86,7 +86,7 @@ class Peripherals:
                 pass
             attempt += 1
         self._speaker_enable.value = False
-    
+
     def deinit(self):
         """Call deinit on all resources to free them"""
         self.neopixels.deinit()
