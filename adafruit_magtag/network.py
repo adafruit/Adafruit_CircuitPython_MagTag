@@ -27,8 +27,9 @@ Implementation Notes
 
 """
 
+import neopixel
 from adafruit_portalbase.network import NetworkBase
-from adafruit_magtag.wifi_module import WiFi
+from adafruit_portalbase.wifi_esp32s2 import WiFi
 
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MagTag.git"
@@ -53,8 +54,12 @@ class Network(NetworkBase):
         extract_values=True,
         debug=False,
     ):
+        if status_neopixel:
+            status_led = neopixel.NeoPixel(status_neopixel, 1, brightness=0.2)
+        else:
+            status_led = None
         super().__init__(
-            WiFi(status_neopixel=status_neopixel),
+            WiFi(status_led=status_led),
             extract_values=extract_values,
             debug=debug,
         )
