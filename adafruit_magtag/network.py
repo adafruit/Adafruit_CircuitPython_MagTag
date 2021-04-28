@@ -67,7 +67,11 @@ class Network(NetworkBase):
     @property
     def enabled(self):
         """
-        Return whether the WiFi is enabled
+        Get or Set whether the WiFi is enabled
 
         """
         return self._wifi.enabled
+
+    @enabled.setter
+    def enabled(self, value):
+        self._wifi.enabled = bool(value)
