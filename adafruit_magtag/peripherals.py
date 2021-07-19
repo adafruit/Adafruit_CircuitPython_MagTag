@@ -44,9 +44,12 @@ class Peripherals:
     def __init__(self):
         # Neopixels
         self.neopixels = neopixel.NeoPixel(board.NEOPIXEL, 4, brightness=0.3)
-        self._neopixel_disable = DigitalInOut(board.NEOPIXEL_POWER)
-        self._neopixel_disable.direction = Direction.OUTPUT
-        self._neopixel_disable.value = False
+        try:
+            self._neopixel_disable = DigitalInOut(board.NEOPIXEL_POWER)
+            self._neopixel_disable.direction = Direction.OUTPUT
+            self._neopixel_disable.value = False
+        except ValueError:
+            self._neopixel_disable = None
 
         # Battery Voltage
         self._batt_monitor = AnalogIn(board.BATTERY)
@@ -90,7 +93,8 @@ class Peripherals:
     def deinit(self):
         """Call deinit on all resources to free them"""
         self.neopixels.deinit()
-        self._neopixel_disable.deinit()
+        if self._neopixel_disable is not None:
+            self._neopixel_disable.deinit()
         self._speaker_enable.deinit()
         for button in self.buttons:
             button.deinit()
@@ -107,11 +111,14 @@ class Peripherals:
         """
         Enable or disable the neopixels for power savings
         """
-        return self._neopixel_disable.value
+        if self._neopixel_disable is not None:
+            return self._neopixel_disable.value
+        return False
 
     @neopixel_disable.setter
     def neopixel_disable(self, value):
-        self._neopixel_disable.value = value
+        if self._neopixel_disable is not None:
+            self._neopixel_disable.value = value
 
     @property
     def speaker_disable(self):
