@@ -5,3 +5,4 @@
 python:
     version: 3
 requirements_file: docs/requirements.txt
+requirements_file: requirements.txt
