@@ -42,14 +42,15 @@ class Peripherals:
 
     # pylint: disable=too-many-instance-attributes, too-many-locals, too-many-branches, too-many-statements
     def __init__(self):
-        # Neopixels
-        self.neopixels = neopixel.NeoPixel(board.NEOPIXEL, 4, brightness=0.3)
+        # Neopixel power
         try:
             self._neopixel_disable = DigitalInOut(board.NEOPIXEL_POWER)
             self._neopixel_disable.direction = Direction.OUTPUT
             self._neopixel_disable.value = False
         except ValueError:
             self._neopixel_disable = None
+        # Neopixels
+        self.neopixels = neopixel.NeoPixel(board.NEOPIXEL, 4, brightness=0.3)
 
         # Battery Voltage
         self._batt_monitor = AnalogIn(board.BATTERY)
