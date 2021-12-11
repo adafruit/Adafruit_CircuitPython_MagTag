@@ -77,8 +77,8 @@ class Peripherals:
         It will attempt to play the sound up to 3 times in the case of
         an error.
         """
-        if frequency <= 0:
-            raise ValueError("The frequency has to be greater than 0.")
+        if frequency < 0:
+            raise ValueError("Negative frequencies are not allowed.")
         self._speaker_enable.value = True
         attempt = 0
         # Try up to 3 times to play the sound
