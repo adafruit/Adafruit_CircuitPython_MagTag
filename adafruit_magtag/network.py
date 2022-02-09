@@ -55,7 +55,10 @@ class Network(NetworkBase):
         debug=False,
     ):
         if status_neopixel:
-            status_led = neopixel.NeoPixel(status_neopixel, 1, brightness=0.2)
+            if isinstance(status_neopixel, neopixel.NeoPixel):
+                status_led = status_neopixel
+            else:
+                status_led = neopixel.NeoPixel(status_neopixel, 1, brightness=0.2)
         else:
             status_led = None
         super().__init__(

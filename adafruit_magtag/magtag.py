@@ -29,6 +29,7 @@ Implementation Notes
 
 import gc
 import time
+import board
 from adafruit_portalbase import PortalBase
 from adafruit_magtag.network import Network
 from adafruit_magtag.graphics import Graphics
@@ -75,6 +76,11 @@ class MagTag(PortalBase):
         debug=False,
     ):
 
+        self.peripherals = Peripherals()
+
+        if status_neopixel == board.NEOPIXEL:
+            status_neopixel = self.peripherals.neopixels
+
         network = Network(
             status_neopixel=status_neopixel,
             extract_values=False,
@@ -98,8 +104,6 @@ class MagTag(PortalBase):
             json_transform=json_transform,
             debug=debug,
         )
-
-        self.peripherals = Peripherals()
 
         gc.collect()
 
