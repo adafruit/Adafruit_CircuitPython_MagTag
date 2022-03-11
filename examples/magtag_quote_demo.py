@@ -22,11 +22,14 @@ magtag = MagTag(
     default_bg=0x000000,
 )
 
+
 def add_quote_marks(quote_text):
-    return f"\"{quote_text}\""
+    return f'"{quote_text}"'
+
 
 def add_hyphen(author_name):
     return f"- {author_name}"
+
 
 magtag.add_text(
     text_position=(
