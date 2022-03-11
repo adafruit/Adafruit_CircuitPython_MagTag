@@ -2,7 +2,6 @@
 #
 # SPDX-License-Identifier: Unlicense
 import os
-import time
 from adafruit_magtag.magtag import MagTag
 
 # Set up where we'll be fetching data from
@@ -55,10 +54,9 @@ magtag.add_text(
     text_transform=add_hyphen,
 )
 
-while True:
-    try:
-        value = magtag.fetch()
-        print("Response is", value)
-    except (ValueError, RuntimeError) as e:
-        print("Some error occured, retrying! -", e)
-    time.sleep(180)
+try:
+    value = magtag.fetch()
+    print("Response is", value)
+except (ValueError, RuntimeError) as e:
+    print("Some error occured, retrying! -", e)
+magtag.exit_and_deep_sleep(60)
