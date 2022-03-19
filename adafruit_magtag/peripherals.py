@@ -33,6 +33,11 @@ from analogio import AnalogIn
 import neopixel
 import simpleio
 
+try:
+    from typing import Union
+except ImportError:
+    pass
+
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MagTag.git"
 
@@ -41,7 +46,7 @@ class Peripherals:
     """Peripherals Helper Class for the MagTag Library"""
 
     # pylint: disable=too-many-instance-attributes, too-many-locals, too-many-branches, too-many-statements
-    def __init__(self):
+    def __init__(self) -> None:
         # Neopixel power
         try:
             self._neopixel_disable = DigitalInOut(board.NEOPIXEL_POWER)
@@ -71,7 +76,9 @@ class Peripherals:
             switch.pull = Pull.UP
             self.buttons.append(switch)
 
-    def play_tone(self, frequency, duration):
+    def play_tone(
+        self, frequency: Union[float, int], duration: Union[float, int]
+    ) -> None:
         """Automatically Enable/Disable the speaker and play
         a tone at the specified frequency for the specified duration
         It will attempt to play the sound up to 3 times in the case of
@@ -91,7 +98,7 @@ class Peripherals:
             attempt += 1
         self._speaker_enable.value = False
 
-    def deinit(self):
+    def deinit(self) -> None:
         """Call deinit on all resources to free them"""
         self.neopixels.deinit()
         if self._neopixel_disable is not None:
@@ -103,12 +110,12 @@ class Peripherals:
         self._light.deinit()
 
     @property
-    def battery(self):
+    def battery(self) -> float:
         """Return the voltage of the battery"""
         return (self._batt_monitor.value / 65535.0) * 3.3 * 2
 
     @property
-    def neopixel_disable(self):
+    def neopixel_disable(self) -> bool:
         """
         Enable or disable the neopixels for power savings
         """
@@ -117,58 +124,58 @@ class Peripherals:
         return False
 
     @neopixel_disable.setter
-    def neopixel_disable(self, value):
+    def neopixel_disable(self, value: bool) -> None:
         if self._neopixel_disable is not None:
             self._neopixel_disable.value = value
 
     @property
-    def speaker_disable(self):
+    def speaker_disable(self) -> bool:
         """
         Enable or disable the speaker for power savings
         """
         return not self._speaker_enable.value
 
     @speaker_disable.setter
-    def speaker_disable(self, value):
+    def speaker_disable(self, value: bool) -> None:
         self._speaker_enable.value = not value
 
     @property
-    def button_a_pressed(self):
+    def button_a_pressed(self) -> bool:
         """
         Return whether Button A is pressed
         """
         return not self.buttons[0].value
 
     @property
-    def button_b_pressed(self):
+    def button_b_pressed(self) -> bool:
         """
         Return whether Button B is pressed
         """
         return not self.buttons[1].value
 
     @property
-    def button_c_pressed(self):
+    def button_c_pressed(self) -> bool:
         """
         Return whether Button C is pressed
         """
         return not self.buttons[2].value
 
     @property
-    def button_d_pressed(self):
+    def button_d_pressed(self) -> bool:
         """
         Return whether Button D is pressed
         """
         return not self.buttons[3].value
 
     @property
-    def any_button_pressed(self):
+    def any_button_pressed(self) -> bool:
         """
         Return whether any button is pressed
         """
         return False in [self.buttons[i].value for i in range(0, 4)]
 
     @property
-    def light(self):
+    def light(self) -> int:
         """
         Return the value of the light sensor. The neopixel_disable property
         must be false to get a value.

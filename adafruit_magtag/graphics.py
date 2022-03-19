@@ -32,6 +32,11 @@ from time import sleep
 import board
 from adafruit_portalbase.graphics import GraphicsBase
 
+try:
+    from typing import Union, Optional, Tuple
+except ImportError:
+    pass
+
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MagTag.git"
 
@@ -50,8 +55,13 @@ class Graphics(GraphicsBase):
 
     # pylint: disable=too-many-instance-attributes, too-many-locals, too-many-branches, too-many-statements
     def __init__(
-        self, *, default_bg=0xFFFFFF, auto_refresh=True, rotation=270, debug=False
-    ):
+        self,
+        *,
+        default_bg: Union[str, int] = 0xFFFFFF,
+        auto_refresh: bool = True,
+        rotation: int = 270,
+        debug: bool = False
+    ) -> None:
         self._debug = debug
         self.display = board.DISPLAY
         self.display.rotation = rotation
@@ -60,7 +70,9 @@ class Graphics(GraphicsBase):
 
         super().__init__(board.DISPLAY, default_bg=default_bg, debug=debug)
 
-    def set_background(self, file_or_color, position=None):
+    def set_background(
+        self, file_or_color: Union[str, int], position: Optional[Tuple] = None
+    ) -> None:
         """The background image to a bitmap file.
 
         :param file_or_color: The filename of the chosen background image, or a hex color.
@@ -73,8 +85,14 @@ class Graphics(GraphicsBase):
         gc.collect()
 
     def qrcode(
-        self, qr_data, *, qr_size=1, x=0, y=0, qr_color=0x000000
-    ):  # pylint: disable=invalid-name
+        self,
+        qr_data: Union[bytes, str],
+        *,
+        qr_size: int = 1,
+        x: int = 0,
+        y: int = 0,
+        qr_color: int = 0x000000
+    ) -> None:  # pylint: disable=invalid-name
         """Display a QR code on the eInk
 
         :param qr_data: The data for the QR code.
