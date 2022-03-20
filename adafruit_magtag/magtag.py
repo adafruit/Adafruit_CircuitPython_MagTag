@@ -37,6 +37,8 @@ from adafruit_magtag.peripherals import Peripherals
 
 try:
     from typing import Optional, Union, Sequence, Dict, Callable, Any
+    import microcontroller
+    import neopixel
 except ImportError:
     pass
 
@@ -75,7 +77,7 @@ class MagTag(PortalBase):
         json_path: Optional[Sequence[Any]] = None,
         regexp_path: Optional[Sequence[str]] = None,
         default_bg: Union[str, int] = 0xFFFFFF,
-        status_neopixel: Optional[str] = None,
+        status_neopixel: Optional[Union[microcontroller.Pin], neopixel.NeoPixel] = None,
         json_transform: Union[Sequence[Callable], Callable] = None,
         rotation: int = 270,
         debug: bool = False,

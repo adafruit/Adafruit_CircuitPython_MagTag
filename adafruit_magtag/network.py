@@ -28,12 +28,12 @@ Implementation Notes
 """
 
 import neopixel
-import microcontroller
 from adafruit_portalbase.network import NetworkBase
 from adafruit_portalbase.wifi_esp32s2 import WiFi
 
 try:
     from typing import Optional, Union
+    import microcontroller
 except ImportError:
     pass
 
