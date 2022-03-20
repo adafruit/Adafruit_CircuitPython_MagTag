@@ -72,7 +72,7 @@ class MagTag(PortalBase):
         *,
         url: Optional[str] = None,
         headers: Optional[Dict[str, str]] = None,
-        json_path: Optional[Sequence[Union[Sequence[object], object]]] = None,
+        json_path: Optional[Sequence[Any]] = None,
         regexp_path: Optional[Sequence[str]] = None,
         default_bg: Union[str, int] = 0xFFFFFF,
         status_neopixel: Optional[str] = None,
