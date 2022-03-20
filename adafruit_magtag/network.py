@@ -28,7 +28,7 @@ Implementation Notes
 """
 
 import neopixel
-import board
+import microcontroller
 from adafruit_portalbase.network import NetworkBase
 from adafruit_portalbase.wifi_esp32s2 import WiFi
 
@@ -56,7 +56,7 @@ class Network(NetworkBase):
     def __init__(
         self,
         *,
-        status_neopixel: Optional[Union[board.Pin, neopixel.NeoPixel]] = None,
+        status_neopixel: Optional[Union[microcontroller.Pin, neopixel.NeoPixel]] = None,
         extract_values: bool = True,
         debug: bool = False,
     ) -> None:
