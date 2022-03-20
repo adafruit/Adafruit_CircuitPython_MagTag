@@ -28,11 +28,12 @@ Implementation Notes
 """
 
 import neopixel
+import board
 from adafruit_portalbase.network import NetworkBase
 from adafruit_portalbase.wifi_esp32s2 import WiFi
 
 try:
-    from typing import Any, Optional
+    from typing import Optional, Union
 except ImportError:
     pass
 
@@ -55,7 +56,7 @@ class Network(NetworkBase):
     def __init__(
         self,
         *,
-        status_neopixel: Optional[str] = None,
+        status_neopixel: Optional[Union[board.Pin, neopixel.NeoPixel]] = None,
         extract_values: bool = True,
         debug: bool = False,
     ) -> None:
@@ -81,5 +82,5 @@ class Network(NetworkBase):
         return self._wifi.enabled
 
     @enabled.setter
-    def enabled(self, value: Any) -> None:
+    def enabled(self, value: bool) -> None:
         self._wifi.enabled = bool(value)

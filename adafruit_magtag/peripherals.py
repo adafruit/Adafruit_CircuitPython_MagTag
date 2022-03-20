@@ -33,11 +33,6 @@ from analogio import AnalogIn
 import neopixel
 import simpleio
 
-try:
-    from typing import Union
-except ImportError:
-    pass
-
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MagTag.git"
 
@@ -76,9 +71,7 @@ class Peripherals:
             switch.pull = Pull.UP
             self.buttons.append(switch)
 
-    def play_tone(
-        self, frequency: Union[float, int], duration: Union[float, int]
-    ) -> None:
+    def play_tone(self, frequency: float, duration: float) -> None:
         """Automatically Enable/Disable the speaker and play
         a tone at the specified frequency for the specified duration
         It will attempt to play the sound up to 3 times in the case of

@@ -71,7 +71,7 @@ class Graphics(GraphicsBase):
         super().__init__(board.DISPLAY, default_bg=default_bg, debug=debug)
 
     def set_background(
-        self, file_or_color: Union[str, int], position: Optional[Tuple] = None
+        self, file_or_color: Union[str, int], position: Optional[Tuple[int, int]] = None
     ) -> None:
         """The background image to a bitmap file.
 
