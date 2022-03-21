@@ -35,6 +35,13 @@ from adafruit_magtag.network import Network
 from adafruit_magtag.graphics import Graphics
 from adafruit_magtag.peripherals import Peripherals
 
+try:
+    from typing import Optional, Union, Sequence, Dict, Callable, Any
+    import microcontroller
+    import neopixel
+except ImportError:
+    pass
+
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MagTag.git"
 
@@ -65,16 +72,16 @@ class MagTag(PortalBase):
     def __init__(
         self,
         *,
-        url=None,
-        headers=None,
-        json_path=None,
-        regexp_path=None,
-        default_bg=0xFFFFFF,
-        status_neopixel=None,
-        json_transform=None,
-        rotation=270,
-        debug=False,
-    ):
+        url: Optional[str] = None,
+        headers: Optional[Dict[str, str]] = None,
+        json_path: Optional[Sequence[Any]] = None,
+        regexp_path: Optional[Sequence[str]] = None,
+        default_bg: Union[str, int] = 0xFFFFFF,
+        status_neopixel: Optional[Union[microcontroller.Pin, neopixel.NeoPixel]] = None,
+        json_transform: Union[Sequence[Callable], Callable] = None,
+        rotation: int = 270,
+        debug: bool = False,
+    ) -> None:
 
         self.peripherals = Peripherals()
 
@@ -107,7 +114,7 @@ class MagTag(PortalBase):
 
         gc.collect()
 
-    def exit_and_deep_sleep(self, sleep_time):
+    def exit_and_deep_sleep(self, sleep_time: float) -> None:
         """
         Stops the current program and enters deep sleep. The program is restarted from the beginning
         after a certain period of time.
@@ -123,7 +130,7 @@ class MagTag(PortalBase):
             self.peripherals.speaker_disable = True
         super().exit_and_deep_sleep(sleep_time)
 
-    def enter_light_sleep(self, sleep_time):
+    def enter_light_sleep(self, sleep_time: float) -> None:
         """
         Enter light sleep and resume the program after a certain period of time.
 
@@ -147,7 +154,7 @@ class MagTag(PortalBase):
         gc.collect()
 
     # pylint: disable=arguments-differ
-    def set_text(self, val, index=0, auto_refresh=True):
+    def set_text(self, val: str, index: int = 0, auto_refresh: bool = True) -> None:
         """Display text, with indexing into our list of text boxes.
 
         :param str val: The text to be displayed
@@ -162,11 +169,16 @@ class MagTag(PortalBase):
 
     # pylint: enable=arguments-differ
 
-    def _fetch_set_text(self, val, index=0):
+    def _fetch_set_text(self, val: str, index: int = 0) -> None:
         self.set_text(val, index=index, auto_refresh=False)
 
     # pylint: disable=arguments-differ
-    def fetch(self, refresh_url=None, timeout=10, auto_refresh=True):
+    def fetch(
+        self,
+        refresh_url: Optional[str] = None,
+        timeout: int = 10,
+        auto_refresh: bool = True,
+    ) -> Any:
         """Fetch data from the url we initialized with, perfom any parsing,
         and display text or graphics. This function does pretty much everything
         Optionally update the URL
@@ -183,7 +195,7 @@ class MagTag(PortalBase):
 
     # pylint: enable=arguments-differ
 
-    def refresh(self):
+    def refresh(self) -> None:
         """
         Refresh the display
         """

@@ -31,6 +31,12 @@ import neopixel
 from adafruit_portalbase.network import NetworkBase
 from adafruit_portalbase.wifi_esp32s2 import WiFi
 
+try:
+    from typing import Optional, Union
+    import microcontroller
+except ImportError:
+    pass
+
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MagTag.git"
 
@@ -50,10 +56,10 @@ class Network(NetworkBase):
     def __init__(
         self,
         *,
-        status_neopixel=None,
-        extract_values=True,
-        debug=False,
-    ):
+        status_neopixel: Optional[Union[microcontroller.Pin, neopixel.NeoPixel]] = None,
+        extract_values: bool = True,
+        debug: bool = False,
+    ) -> None:
         if status_neopixel:
             if isinstance(status_neopixel, neopixel.NeoPixel):
                 status_led = status_neopixel
@@ -68,7 +74,7 @@ class Network(NetworkBase):
         )
 
     @property
-    def enabled(self):
+    def enabled(self) -> bool:
         """
         Get or Set whether the WiFi is enabled
 
@@ -76,5 +82,5 @@ class Network(NetworkBase):
         return self._wifi.enabled
 
     @enabled.setter
-    def enabled(self, value):
+    def enabled(self, value: bool) -> None:
         self._wifi.enabled = bool(value)
