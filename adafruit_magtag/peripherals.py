@@ -65,7 +65,7 @@ class Peripherals:
 
         # Buttons
         self.buttons = []
-        for pin in (board.BUTTON_A, board.BUTTON_B, board.BUTTON_C, board.BUTTON_D):
+        for pin in (board.BUTTON_A, board.BUTTON_B, board.BUTTON_C, board.BUTTON_D, board.BOOT0):
             switch = DigitalInOut(pin)
             switch.direction = Direction.INPUT
             switch.pull = Pull.UP
