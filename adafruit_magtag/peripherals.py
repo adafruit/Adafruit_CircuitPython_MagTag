@@ -64,14 +64,14 @@ class Peripherals:
         self._light = AnalogIn(board.LIGHT)
 
         # Buttons
+        button_pins = [board.BUTTON_A, board.BUTTON_B, board.BUTTON_C, board.BUTTON_D]
+
+        # Add BOOT0 as a button pin, only if it's defined.
+        if hasattr(board, "BOOT0"):
+            button_pins.append(board.BOOT0)
+
         self.buttons = []
-        for pin in (
-            board.BUTTON_A,
-            board.BUTTON_B,
-            board.BUTTON_C,
-            board.BUTTON_D,
-            board.BOOT0,
-        ):
+        for pin in button_pins:
             switch = DigitalInOut(pin)
             switch.direction = Direction.INPUT
             switch.pull = Pull.UP
