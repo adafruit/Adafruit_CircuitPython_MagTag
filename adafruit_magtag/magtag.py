@@ -122,6 +122,10 @@ class MagTag(PortalBase):
         See https://circuitpython.readthedocs.io/en/latest/shared-bindings/alarm/index.html for more
         details.
 
+        Note: This function is for time based deep sleep only. If you want to use a PinAlarm
+        to wake up from deep sleep you need to deinit() the pins and use the alarm module
+        directly.
+
         :param float sleep_time: The amount of time to sleep in seconds
 
         """
