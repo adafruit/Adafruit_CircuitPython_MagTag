@@ -98,7 +98,9 @@ class Peripherals:
         self._speaker_enable.value = False
 
     def deinit(self) -> None:
-        """Call deinit on all resources to free them"""
+        """Call deinit to free all resources used by peripherals.
+        You must call this function before you can use the peripheral
+        pins for other purposes like PinAlarm with deep sleep."""
         self.neopixels.deinit()
         if self._neopixel_disable is not None:
             self._neopixel_disable.deinit()
