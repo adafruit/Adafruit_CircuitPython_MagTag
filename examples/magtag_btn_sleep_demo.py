@@ -29,7 +29,6 @@ last_action_time = now
 while True:
     now = time.monotonic()
     if now - last_action_time >= 10.0:
-
         magtag.set_text("Sleeping")
         magtag.peripherals.deinit()
         time.sleep(2)

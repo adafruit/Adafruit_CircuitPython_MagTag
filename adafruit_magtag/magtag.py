@@ -82,7 +82,6 @@ class MagTag(PortalBase):
         rotation: int = 270,
         debug: bool = False,
     ) -> None:
-
         self.peripherals = Peripherals()
 
         if status_neopixel == board.NEOPIXEL:
