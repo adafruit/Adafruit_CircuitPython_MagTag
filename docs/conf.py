@@ -35,6 +35,7 @@ autodoc_mock_imports = [
     "socketpool",
     "secrets",
     "analogio",
+    "bitmaptools",
 ]
 
 
