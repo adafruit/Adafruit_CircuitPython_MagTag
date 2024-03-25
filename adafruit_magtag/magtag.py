@@ -208,3 +208,24 @@ class MagTag(PortalBase):
                 return
             except RuntimeError:
                 time.sleep(1)
+
+    def remove_all_text(self, auto_refresh=True, clear_font_cache=False):
+        """Remove all added text and labels. This version has an
+
+        :param auto_refresh: Automatically refresh the display after setting the
+                             text. Defaults to True.
+        :param bool clear_font_cache: Clear the font cache. Defaults to False.
+        """
+
+        # Remove the labels
+        for i in range(
+            len(self._text)  # pylint: disable=access-member-before-definition
+        ):
+            self.set_text("", auto_refresh=False, index=i)
+        # Remove the data
+        self._text = []  # pylint: disable=attribute-defined-outside-init
+        if clear_font_cache:
+            self._fonts = {}  # pylint: disable=attribute-defined-outside-init
+        if auto_refresh:
+            self.refresh()
+        gc.collect()
