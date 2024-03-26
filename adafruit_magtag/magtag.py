@@ -210,7 +210,7 @@ class MagTag(PortalBase):
                 time.sleep(1)
 
     def remove_all_text(self, auto_refresh=True, clear_font_cache=False):
-        """Remove all added text and labels. This version has an
+        """Remove all added text and labels.
 
         :param auto_refresh: Automatically refresh the display after setting the
                              text. Defaults to True.
