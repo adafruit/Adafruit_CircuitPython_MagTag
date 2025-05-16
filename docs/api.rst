@@ -1,4 +1,6 @@
 
+API Reference
+#############
 
 .. automodule:: adafruit_magtag.graphics
    :members:

@@ -33,6 +33,7 @@ from adafruit_portalbase.wifi_esp32s2 import WiFi
 
 try:
     from typing import Optional, Union
+
     import microcontroller
 except ImportError:
     pass
@@ -52,7 +53,6 @@ class Network(NetworkBase):
 
     """
 
-    # pylint: disable=too-many-instance-attributes, too-many-locals, too-many-branches, too-many-statements
     def __init__(
         self,
         *,

@@ -29,14 +29,17 @@ Implementation Notes
 
 import gc
 import time
+
 import board
 from adafruit_portalbase import PortalBase
-from adafruit_magtag.network import Network
+
 from adafruit_magtag.graphics import Graphics
+from adafruit_magtag.network import Network
 from adafruit_magtag.peripherals import Peripherals
 
 try:
-    from typing import Optional, Union, Sequence, Dict, Callable, Any
+    from typing import Any, Callable, Dict, Optional, Sequence, Union
+
     import microcontroller
     import neopixel
 except ImportError:
@@ -68,7 +71,6 @@ class MagTag(PortalBase):
 
     """
 
-    # pylint: disable=too-many-instance-attributes, too-many-locals, too-many-branches, too-many-statements
     def __init__(
         self,
         *,
@@ -156,7 +158,6 @@ class MagTag(PortalBase):
             self.peripherals.neopixels[i] = neopixel_values[i]
         gc.collect()
 
-    # pylint: disable=arguments-differ
     def set_text(self, val: str, index: int = 0, auto_refresh: bool = True) -> None:
         """Display text, with indexing into our list of text boxes.
 
@@ -170,12 +171,9 @@ class MagTag(PortalBase):
         if auto_refresh:
             self.refresh()
 
-    # pylint: enable=arguments-differ
-
     def _fetch_set_text(self, val: str, index: int = 0) -> None:
         self.set_text(val, index=index, auto_refresh=False)
 
-    # pylint: disable=arguments-differ
     def fetch(
         self,
         refresh_url: Optional[str] = None,
@@ -195,8 +193,6 @@ class MagTag(PortalBase):
         if auto_refresh:
             self.refresh()
         return values
-
-    # pylint: enable=arguments-differ
 
     def refresh(self) -> None:
         """
@@ -218,14 +214,12 @@ class MagTag(PortalBase):
         """
 
         # Remove the labels
-        for i in range(
-            len(self._text)  # pylint: disable=access-member-before-definition
-        ):
+        for i in range(len(self._text)):
             self.set_text("", auto_refresh=False, index=i)
         # Remove the data
-        self._text = []  # pylint: disable=attribute-defined-outside-init
+        self._text = []
         if clear_font_cache:
-            self._fonts = {}  # pylint: disable=attribute-defined-outside-init
+            self._fonts = {}
         if auto_refresh:
             self.refresh()
         gc.collect()

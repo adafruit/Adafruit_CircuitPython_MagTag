@@ -2,6 +2,7 @@
 #
 # SPDX-License-Identifier: Unlicense
 import os
+
 from adafruit_magtag.magtag import MagTag
 
 # Set up where we'll be fetching data from

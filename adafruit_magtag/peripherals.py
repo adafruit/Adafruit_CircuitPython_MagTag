@@ -28,10 +28,10 @@ Implementation Notes
 """
 
 import board
-from digitalio import DigitalInOut, Direction, Pull
-from analogio import AnalogIn
 import neopixel
 import simpleio
+from analogio import AnalogIn
+from digitalio import DigitalInOut, Direction, Pull
 
 __version__ = "0.0.0+auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MagTag.git"
@@ -40,7 +40,6 @@ __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MagTag.git"
 class Peripherals:
     """Peripherals Helper Class for the MagTag Library"""
 
-    # pylint: disable=too-many-instance-attributes, too-many-locals, too-many-branches, too-many-statements
     def __init__(self) -> None:
         # Neopixel power
         try:
