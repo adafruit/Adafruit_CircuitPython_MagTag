@@ -3,8 +3,10 @@
 # SPDX-License-Identifier: Unlicense
 
 import time
+
 import alarm
 import board
+
 from adafruit_magtag.magtag import MagTag
 
 IDLE_TIMEOUT = 10  # seconds idle, then sleep
@@ -40,7 +42,7 @@ while True:
 
     for i, b in enumerate(magtag.peripherals.buttons):
         if not b.value:
-            print("Button %c pressed" % chr((ord("A") + i)))
+            print("Button %c pressed" % chr(ord("A") + i))
             last_action_time = now
             magtag.peripherals.neopixel_disable = False
             magtag.peripherals.neopixels.fill(button_colors[i])

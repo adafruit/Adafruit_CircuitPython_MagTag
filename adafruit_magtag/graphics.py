@@ -29,11 +29,12 @@ Implementation Notes
 
 import gc
 from time import sleep
+
 import board
 from adafruit_portalbase.graphics import GraphicsBase
 
 try:
-    from typing import Union, Optional, Tuple
+    from typing import Optional, Tuple, Union
 except ImportError:
     pass
 
@@ -53,14 +54,13 @@ class Graphics(GraphicsBase):
 
     """
 
-    # pylint: disable=too-many-instance-attributes, too-many-locals, too-many-branches, too-many-statements
     def __init__(
         self,
         *,
         default_bg: Union[str, int] = 0xFFFFFF,
         auto_refresh: bool = True,
         rotation: int = 270,
-        debug: bool = False
+        debug: bool = False,
     ) -> None:
         self._debug = debug
         self.display = board.DISPLAY
@@ -91,8 +91,8 @@ class Graphics(GraphicsBase):
         qr_size: int = 1,
         x: int = 0,
         y: int = 0,
-        qr_color: int = 0x000000
-    ) -> None:  # pylint: disable=invalid-name
+        qr_color: int = 0x000000,
+    ) -> None:
         """Display a QR code on the eInk
 
         :param qr_data: The data for the QR code.
