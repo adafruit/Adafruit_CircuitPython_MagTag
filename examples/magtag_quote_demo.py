@@ -19,7 +19,6 @@ except AttributeError:
 magtag = MagTag(
     url=DATA_SOURCE,
     json_path=(QUOTE_LOCATION, AUTHOR_LOCATION),
-    default_bg=0x000000,
 )
 
 
@@ -36,7 +35,6 @@ magtag.add_text(
         (magtag.graphics.display.width // 2) - 1,
         (magtag.graphics.display.height // 2) - 20,
     ),
-    text_color=0xFFFFFF,
     text_wrap=44,
     text_maxlen=180,
     line_spacing=1.0,
@@ -49,7 +47,6 @@ magtag.add_text(
         (magtag.graphics.display.width // 2) - 120,
         (magtag.graphics.display.height // 2) + 34,
     ),
-    text_color=0xFFFFFF,
     text_wrap=0,
     text_maxlen=30,
     text_transform=add_hyphen,
