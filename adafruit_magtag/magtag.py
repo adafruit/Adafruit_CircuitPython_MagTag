@@ -36,6 +36,7 @@ from adafruit_portalbase import PortalBase
 from adafruit_magtag.graphics import Graphics
 from adafruit_magtag.network import Network
 from adafruit_magtag.peripherals import Peripherals
+from supervisor import reload
 
 try:
     from typing import Any, Callable, Dict, Optional, Sequence, Union
@@ -130,10 +131,17 @@ class MagTag(PortalBase):
         :param float sleep_time: The amount of time to sleep in seconds
 
         """
+        while board.DISPLAY.busy:
+            self.enter_light_sleep(1)
+            sleep_time -= 1
+
         if self._alarm:
             self.peripherals.neopixel_disable = True
             self.peripherals.speaker_disable = True
-        super().exit_and_deep_sleep(sleep_time)
+        try:
+            super().exit_and_deep_sleep(sleep_time)
+        except ValueError:
+            reload()
 
     def enter_light_sleep(self, sleep_time: float) -> None:
         """
