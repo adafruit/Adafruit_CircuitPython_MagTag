@@ -42,7 +42,7 @@ while True:
 
     for i, b in enumerate(magtag.peripherals.buttons):
         if not b.value:
-            print("Button %c pressed" % chr(ord("A") + i))
+            print(f"Button {chr(ord('A') + i)} pressed")
             last_action_time = now
             magtag.peripherals.neopixel_disable = False
             magtag.peripherals.neopixels.fill(button_colors[i])
