@@ -168,11 +168,22 @@ class Peripherals:
         return not self.buttons[3].value
 
     @property
+    def button_e_pressed(self) -> bool:
+        """
+        Return whether Button E (BOOT0) is pressed. Always returns False
+        if the board does not define BOOT0.
+        """
+        if len(self.buttons) < 5:
+            return False
+        return not self.buttons[4].value
+
+    @property
     def any_button_pressed(self) -> bool:
         """
-        Return whether any button is pressed
+        Return whether any button is pressed, including Button E (BOOT0)
+        when the board defines it
         """
-        return False in [self.buttons[i].value for i in range(0, 4)]
+        return any(not button.value for button in self.buttons)
 
     @property
     def light(self) -> int:
