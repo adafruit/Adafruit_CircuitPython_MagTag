@@ -28,7 +28,7 @@ Implementation Notes
 """
 
 import gc
-from time import sleep
+import time
 
 import board
 from adafruit_portalbase import PortalBase
@@ -194,22 +194,16 @@ class MagTag(PortalBase):
             self.refresh()
         return values
 
-    def refresh(self, blocking=True) -> None:
+    def refresh(self) -> None:
         """
         Refresh the display
-
-        :param blocking: Wait to return until the display refresh is complete.
-                         Defaults to True
-
         """
         while True:
             try:
                 self.graphics.display.refresh()
-                while blocking and board.DISPLAY.busy:
-                    sleep(1)
                 return
             except RuntimeError:
-                sleep(1)
+                time.sleep(1)
 
     def remove_all_text(self, auto_refresh=True, clear_font_cache=False):
         """Remove all added text and labels.
